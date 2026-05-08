@@ -1,0 +1,5 @@
+.vercel
+node_modules
+*.lock
+*_backup.*
+.DS_Store
