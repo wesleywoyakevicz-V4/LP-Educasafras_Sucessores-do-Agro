@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     initFAQ();
+    initCurriculumAccordion();
+    initFacultyCards();
     initLeadModal();
     initSmoothScroll();
     initRevealAnimations();
     initNavbarState();
+    initHeroSlideshow();
 });
 
 function initFAQ() {
@@ -20,6 +23,36 @@ function initFAQ() {
             const isActive = item.classList.toggle('active');
             button.setAttribute('aria-expanded', String(isActive));
             indicator.textContent = isActive ? '-' : '+';
+        });
+    });
+}
+
+function initCurriculumAccordion() {
+    document.querySelectorAll('.curriculum-item').forEach((item) => {
+        const trigger = item.querySelector('.curriculum-trigger');
+
+        if (!trigger) {
+            return;
+        }
+
+        trigger.addEventListener('click', () => {
+            const isOpen = item.classList.toggle('is-open');
+            trigger.setAttribute('aria-expanded', String(isOpen));
+        });
+    });
+}
+
+function initFacultyCards() {
+    document.querySelectorAll('.faculty-card').forEach((card) => {
+        const trigger = card.querySelector('.faculty-toggle');
+
+        if (!trigger) {
+            return;
+        }
+
+        trigger.addEventListener('click', () => {
+            const isOpen = card.classList.toggle('is-open');
+            trigger.setAttribute('aria-expanded', String(isOpen));
         });
     });
 }
@@ -58,7 +91,7 @@ function initLeadModal() {
     const form = modal.querySelector('.lead-form');
     const successState = modal.querySelector('.lead-modal-success');
     const firstInput = modal.querySelector('input, select, textarea');
-    const openTriggers = document.querySelectorAll('[data-open-lead-modal]');
+    const openTriggers = document.querySelectorAll('.pricing .price-card.active [data-open-lead-modal]');
     const closeTriggers = modal.querySelectorAll('[data-close-lead-modal]');
 
     const resetModal = () => {
@@ -111,10 +144,6 @@ function initLeadModal() {
         }
     });
 
-    if (window.location.hash === '#lead-popup') {
-        openModal();
-    }
-
     if (!form) {
         return;
     }
@@ -136,12 +165,13 @@ function initRevealAnimations() {
         '.hero-meta-item',
         '.metric',
         '.logo-pill',
-        '.copy-stack > *',
+        '.curriculum-intro > *',
+        '.curriculum-item',
         '.feature-card',
         '.step-card',
+        '.faculty-card',
         '.price-card',
         '.faq-item',
-        '.visual-card',
         '.collage-stage',
         '.collage-card',
         '.collage-note'
@@ -215,4 +245,30 @@ function initNavbarState() {
     });
 
     heroObserver.observe(hero);
+}
+
+function initHeroSlideshow() {
+    const slideshow = document.querySelector('[data-hero-slideshow]');
+    if (!slideshow) {
+        return;
+    }
+
+    const slides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
+    if (!slides.length) {
+        return;
+    }
+
+    let activeIndex = 0;
+
+    const setActiveSlide = (index) => {
+        activeIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+            slide.classList.toggle('is-active', slideIndex === activeIndex);
+        });
+    };
+
+    setActiveSlide(0);
+    window.setInterval(() => {
+        setActiveSlide(activeIndex + 1);
+    }, 4200);
 }
