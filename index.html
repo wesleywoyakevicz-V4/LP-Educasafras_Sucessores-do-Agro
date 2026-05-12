@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#102b35">
     <title>Sucessores do Agro | Educasafras</title>
-    <link rel="stylesheet" href="style.css?v=20260512-hero-style">
+    <link rel="stylesheet" href="style.css?v=20260512-mobile-nav">
 </head>
 <body>
     <header class="topbar">
         <div class="container topbar-shell">
             <a class="brand" href="#topo" aria-label="Ir para o topo">
-                <img src="Sucessores do agroLOGO.svg" alt="Sucessores do Agro">
+                <img src="Sucessores do agroLOGO.svg" alt="Sucessores do Agro" class="brand-primary-logo">
                 <div class="brand-mark">
                     <img src="Logo-educasafras.svg" alt="Educasafras" class="brand-secondary-logo">
                 </div>
             </a>
 
-            <nav class="nav" aria-label="Principal">
+            <nav class="nav" id="primary-navigation" aria-label="Principal">
                 <a href="#modulos">Módulos</a>
                 <a href="#processo">Processo</a>
                 <a href="#inscricao">Inscrição</a>
@@ -25,6 +25,17 @@
             </nav>
 
             <a href="#inscricao" class="btn btn-primary btn-sm">Garantir vaga <span>→</span></a>
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="primary-navigation"
+                aria-label="Abrir menu principal"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -440,6 +451,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=20260508-2"></script>
+    <script src="script.js?v=20260512-mobile-nav"></script>
 </body>
 </html>

@@ -3,11 +3,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initCurriculumAccordion();
     initFacultyCards();
     initLeadModal();
+    initMobileMenu();
     initSmoothScroll();
     initRevealAnimations();
     initNavbarState();
     initHeroSlideshow();
 });
+
+function updateTopbarSafeSpace() {
+    const topbar = document.querySelector('.topbar');
+    const topbarShell = document.querySelector('.topbar-shell');
+
+    if (!topbar && !topbarShell) {
+        return;
+    }
+
+    const measuredHeight = topbar
+        ? Math.ceil(topbar.getBoundingClientRect().height)
+        : Math.ceil(topbarShell.getBoundingClientRect().height);
+
+    document.documentElement.style.setProperty('--topbar-safe-space', `${measuredHeight}px`);
+}
 
 function initFAQ() {
     document.querySelectorAll('.faq-item').forEach((item) => {
@@ -80,6 +96,76 @@ function initSmoothScroll() {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
+}
+
+function initMobileMenu() {
+    const toggle = document.querySelector('.menu-toggle');
+    const topbarShell = document.querySelector('.topbar-shell');
+    const nav = document.querySelector('.nav');
+
+    if (!toggle || !topbarShell || !nav) {
+        return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 760px)');
+
+    const setMenuState = (isOpen) => {
+        topbarShell.classList.toggle('is-menu-open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Fechar menu principal' : 'Abrir menu principal');
+        updateTopbarSafeSpace();
+    };
+
+    const closeMenu = () => setMenuState(false);
+
+    toggle.addEventListener('click', () => {
+        if (!mobileQuery.matches) {
+            return;
+        }
+
+        setMenuState(!topbarShell.classList.contains('is-menu-open'));
+    });
+
+    nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', () => {
+            if (mobileQuery.matches) {
+                closeMenu();
+            }
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!mobileQuery.matches || !topbarShell.classList.contains('is-menu-open')) {
+            return;
+        }
+
+        if (topbarShell.contains(event.target)) {
+            return;
+        }
+
+        closeMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && topbarShell.classList.contains('is-menu-open')) {
+            closeMenu();
+        }
+    });
+
+    const handleViewportChange = () => {
+        if (!mobileQuery.matches) {
+            closeMenu();
+            return;
+        }
+
+        updateTopbarSafeSpace();
+    };
+
+    if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', handleViewportChange);
+    } else if (typeof mobileQuery.addListener === 'function') {
+        mobileQuery.addListener(handleViewportChange);
+    }
 }
 
 function initLeadModal() {
@@ -201,20 +287,11 @@ function initRevealAnimations() {
 }
 
 function initNavbarState() {
-    const topbar = document.querySelector('.topbar');
     const topbarShell = document.querySelector('.topbar-shell');
     const hero = document.querySelector('.hero');
     if (!topbarShell) {
         return;
     }
-
-    const updateSafeSpace = () => {
-        const measuredHeight = topbar
-            ? Math.ceil(topbar.getBoundingClientRect().height)
-            : Math.ceil(topbarShell.getBoundingClientRect().height);
-
-        document.documentElement.style.setProperty('--topbar-safe-space', `${measuredHeight}px`);
-    };
 
     const updateState = () => {
         const shouldCompact = window.scrollY > 16;
@@ -222,13 +299,13 @@ function initNavbarState() {
     };
 
     updateState();
-    updateSafeSpace();
-    window.addEventListener('resize', updateSafeSpace, { passive: true });
+    updateTopbarSafeSpace();
+    window.addEventListener('resize', updateTopbarSafeSpace, { passive: true });
     window.addEventListener('scroll', updateState, { passive: true });
-    window.addEventListener('load', updateSafeSpace, { once: true });
+    window.addEventListener('load', updateTopbarSafeSpace, { once: true });
 
     if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(updateSafeSpace).catch(() => {});
+        document.fonts.ready.then(updateTopbarSafeSpace).catch(() => {});
     }
 
     if (!hero) {
