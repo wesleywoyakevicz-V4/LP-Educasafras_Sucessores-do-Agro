@@ -248,8 +248,8 @@ function initRevealAnimations() {
     const selectors = [
         '.section-header',
         '.trust-shell',
-        '.hero-meta-item',
-        '.metric',
+        '.hero-info-item',
+        '.hero-proof-item',
         '.logo-pill',
         '.curriculum-intro > *',
         '.curriculum-item',
