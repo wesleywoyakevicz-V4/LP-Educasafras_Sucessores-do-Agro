@@ -61,14 +61,37 @@ function initCurriculumAccordion() {
 function initFacultyCards() {
     document.querySelectorAll('.faculty-card').forEach((card) => {
         const trigger = card.querySelector('.faculty-toggle');
+        const bio = card.querySelector('.faculty-bio');
 
-        if (!trigger) {
+        if (!trigger || !bio) {
             return;
         }
+
+        bio.hidden = true;
+        bio.style.maxHeight = '0px';
 
         trigger.addEventListener('click', () => {
             const isOpen = card.classList.toggle('is-open');
             trigger.setAttribute('aria-expanded', String(isOpen));
+
+            if (isOpen) {
+                bio.hidden = false;
+                bio.style.maxHeight = `${bio.scrollHeight}px`;
+                return;
+            }
+
+            bio.style.maxHeight = `${bio.scrollHeight}px`;
+            window.requestAnimationFrame(() => {
+                bio.style.maxHeight = '0px';
+            });
+        });
+
+        bio.addEventListener('transitionend', (event) => {
+            if (event.propertyName !== 'max-height' || card.classList.contains('is-open')) {
+                return;
+            }
+
+            bio.hidden = true;
         });
     });
 }
