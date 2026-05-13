@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#102b35">
     <title>Sucessores do Agro | Educasafras</title>
-    <link rel="stylesheet" href="style.css?v=20260512-mobile-nav">
+    <link rel="stylesheet" href="style.css?v=20260513-inline-form">
 </head>
 <body>
     <header class="topbar">
@@ -276,7 +276,8 @@
                     <p>3 dias no coração do agro brasileiro.</p>
                 </div>
 
-                <div class="process-grid">
+                <div class="process-carousel-shell">
+                    <div class="process-grid">
                     <article class="step-card">
                         <h3>Dinâmicas Práticas</h3>
                         <p>Estudos de caso reais e discussões guiadas por consultores com décadas no campo.</p>
@@ -296,6 +297,40 @@
                         <h3>100% Agro</h3>
                         <p>Conteúdo feito por quem vive o agro de verdade, com linguagem do campo.</p>
                     </article>
+                    </div>
+                    <p class="process-carousel-hint">Deslize para ver todos os formatos da imersao.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section testimonials-section" aria-labelledby="testimonials-heading" hidden aria-hidden="true">
+            <div class="container testimonials-shell">
+                <div class="section-header testimonials-header">
+                    <h2 id="testimonials-heading">O que nossos alunos tÃªm a dizer</h2>
+                </div>
+
+                <div class="testimonials-carousel-shell">
+                    <div class="testimonials-grid" aria-label="Depoimentos de alunos da imersÃ£o">
+                        <article class="testimonial-card">
+                            <p class="testimonial-quote">"A parte de gestÃ£o, a tributÃ¡ria, toda a parte de sucessÃ£o â€” tem muitas coisas que precisam ser colocadas em ordem. Procurar esse curso me proporcionou trazer esse conhecimento para conseguir colocar na propriedade."</p>
+                            <strong class="testimonial-author">Silvia Beltrame</strong>
+                        </article>
+
+                        <article class="testimonial-card">
+                            <p class="testimonial-quote">"Muito do que eu vi aqui, realmente, nÃ£o Ã© algo que a gente vÃª durante a graduaÃ§Ã£o. O pai e a mÃ£e discutindo, eu sempre perguntando. EntÃ£o o curso veio para que ficasse mais claro."</p>
+                            <strong class="testimonial-author">Anna Zancanaro</strong>
+                        </article>
+
+                        <article class="testimonial-card">
+                            <p class="testimonial-quote">"O curso nos trouxe alguns entendimentos sobre quem Ã© parte do patrimÃ´nio, quem Ã© parte do negÃ³cio, quem Ã© parte da famÃ­lia. Ouvir pessoas qualificadas com habilidades para falar sobre isso Ã© maravilhoso."</p>
+                            <strong class="testimonial-author">Gujo Teixeira</strong>
+                        </article>
+                    </div>
+                    <p class="testimonials-carousel-hint">Deslize para ver todos os depoimentos.</p>
+                </div>
+
+                <div class="testimonials-cta">
+                    <a href="#lead-form-section" class="btn btn-primary">ASSUMIR MEU LUGAR <span>â†’</span></a>
                 </div>
             </div>
         </section>
@@ -329,7 +364,7 @@
                             <li>Networking com sucessores de todo o Brasil</li>
                             <li>Certificado Educasafras</li>
                         </ul>
-                        <a href="#lead-popup" class="btn btn-primary btn-block" data-open-lead-modal>Garantir meu lugar <span>→</span></a>
+                        <a href="#lead-form-section" class="btn btn-primary btn-block">Garantir meu lugar <span>→</span></a>
                         <p class="note">Vagas limitadas para garantir a qualidade da experiência</p>
                     </article>
 
@@ -339,6 +374,64 @@
                         <p>ou 6x no cartão</p>
                         <a href="#inscricao" class="btn btn-outline btn-block" aria-disabled="true">Em breve</a>
                     </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section lead-section" id="lead-form-section" aria-labelledby="lead-form-heading">
+            <div class="container">
+                <div class="lead-section-shell">
+                    <div class="lead-modal-copy">
+                        <h2 id="lead-form-heading">Você está a um passo de transformar o futuro do seu <span>negócio familiar</span>.</h2>
+                        <p>Preencha o formulário e um consultor entrará em contato para tirar suas dúvidas sobre a imersão, formas de pagamento e disponibilidade de vagas.</p>
+                    </div>
+
+                    <form class="lead-form" novalidate>
+                        <div class="lead-form-grid">
+                            <label class="lead-field">
+                                <span>Nome completo *</span>
+                                <input type="text" name="nome" placeholder="Seu nome" autocomplete="name" required>
+                            </label>
+
+                            <label class="lead-field">
+                                <span>WhatsApp *</span>
+                                <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" required>
+                            </label>
+
+                            <label class="lead-field lead-field-full">
+                                <span>E-mail *</span>
+                                <input type="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+                            </label>
+
+                            <label class="lead-field lead-field-full">
+                                <span>Qual seu envolvimento com o negócio? *</span>
+                                <select name="envolvimento" required>
+                                    <option value="">Selecione uma opção</option>
+                                    <option value="sucessor">Sou sucessor(a)</option>
+                                    <option value="fundador">Sou fundador(a)</option>
+                                    <option value="gestor">Sou gestor(a)</option>
+                                    <option value="familia">Sou familiar / sócio(a)</option>
+                                    <option value="consultor">Sou consultor(a) / especialista</option>
+                                </select>
+                            </label>
+
+                            <label class="lead-field lead-field-full">
+                                <span>Mensagem</span>
+                                <textarea name="desafio" rows="4" placeholder="Tem alguma dúvida sobre a imersão? Escreva aqui..."></textarea>
+                            </label>
+                        </div>
+
+                        <div class="lead-form-footer">
+                            <button class="btn lead-modal-submit" type="submit">Receber mais informações <span>→</span></button>
+                            <p>Ao enviar, você concorda com nossa <a href="#">Política de Privacidade</a>.</p>
+                        </div>
+                    </form>
+
+                    <div class="lead-modal-success" hidden>
+                        <strong>Recebemos seus dados.</strong>
+                        <p>Nosso time vai entrar em contato para seguir com sua inscrição e esclarecer as próximas etapas.</p>
+                        <button class="btn btn-primary" type="button" data-reset-lead-form>Preencher novamente</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -386,65 +479,6 @@
         </section>
     </main>
 
-    <div class="lead-modal" id="lead-popup" aria-hidden="true" data-lead-modal>
-        <div class="lead-modal-backdrop" data-close-lead-modal></div>
-        <div class="lead-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="lead-modal-title">
-            <button class="lead-modal-close" type="button" aria-label="Fechar formulário" data-close-lead-modal>×</button>
-
-            <div class="lead-modal-copy">
-                <h2 id="lead-modal-title">Você está a um passo de transformar o futuro do seu <span>negócio familiar</span>.</h2>
-                <p>Preencha o formulário e um consultor entrará em contato para tirar suas dúvidas sobre a imersão, formas de pagamento e disponibilidade de vagas.</p>
-            </div>
-
-            <form class="lead-form" novalidate>
-                <div class="lead-form-grid">
-                    <label class="lead-field">
-                        <span>Nome completo *</span>
-                        <input type="text" name="nome" placeholder="Seu nome" autocomplete="name" required>
-                    </label>
-
-                    <label class="lead-field">
-                        <span>WhatsApp *</span>
-                        <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" required>
-                    </label>
-
-                    <label class="lead-field lead-field-full">
-                        <span>E-mail *</span>
-                        <input type="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
-                    </label>
-
-                    <label class="lead-field lead-field-full">
-                        <span>Qual seu envolvimento com o negócio? *</span>
-                        <select name="envolvimento" required>
-                            <option value="">Selecione uma opção</option>
-                            <option value="sucessor">Sou sucessor(a)</option>
-                            <option value="fundador">Sou fundador(a)</option>
-                            <option value="gestor">Sou gestor(a)</option>
-                            <option value="familia">Sou familiar / sócio(a)</option>
-                            <option value="consultor">Sou consultor(a) / especialista</option>
-                        </select>
-                    </label>
-
-                    <label class="lead-field lead-field-full">
-                        <span>Mensagem</span>
-                        <textarea name="desafio" rows="4" placeholder="Tem alguma dúvida sobre a imersão? Escreva aqui..."></textarea>
-                    </label>
-                </div>
-
-                <div class="lead-form-footer">
-                    <button class="btn lead-modal-submit" type="submit">Receber mais informações <span>→</span></button>
-                    <p>Ao enviar, você concorda com nossa <a href="#">Política de Privacidade</a>.</p>
-                </div>
-            </form>
-
-            <div class="lead-modal-success" hidden>
-                <strong>Recebemos seus dados.</strong>
-                <p>Nosso time vai entrar em contato para seguir com sua inscrição e esclarecer as próximas etapas.</p>
-                <button class="btn btn-primary" type="button" data-close-lead-modal>Fechar</button>
-            </div>
-        </div>
-    </div>
-
     <footer class="footer">
         <div class="container footer-shell">
             <img src="Sucessores do agroLOGO.svg" alt="Sucessores do Agro" class="footer-logo">
@@ -457,6 +491,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=20260512-mobile-nav"></script>
+    <script src="script.js?v=20260513-inline-form"></script>
 </body>
 </html>

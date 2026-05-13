@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFAQ();
     initCurriculumAccordion();
     initFacultyCards();
-    initLeadModal();
+    initLeadForm();
     initMobileMenu();
     initSmoothScroll();
     initRevealAnimations();
@@ -76,10 +76,6 @@ function initFacultyCards() {
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', (event) => {
-            if (anchor.hasAttribute('data-open-lead-modal')) {
-                return;
-            }
-
             const targetId = anchor.getAttribute('href');
 
             if (!targetId || targetId === '#') {
@@ -168,71 +164,33 @@ function initMobileMenu() {
     }
 }
 
-function initLeadModal() {
-    const modal = document.querySelector('[data-lead-modal]');
-    if (!modal) {
+function initLeadForm() {
+    const section = document.querySelector('.lead-section');
+    if (!section) {
         return;
     }
 
-    const form = modal.querySelector('.lead-form');
-    const successState = modal.querySelector('.lead-modal-success');
-    const firstInput = modal.querySelector('input, select, textarea');
-    const openTriggers = document.querySelectorAll('.pricing .price-card.active [data-open-lead-modal]');
-    const closeTriggers = modal.querySelectorAll('[data-close-lead-modal]');
-
-    const resetModal = () => {
-        if (form) {
-            form.hidden = false;
-            form.reset();
-        }
-
-        if (successState) {
-            successState.hidden = true;
-        }
-    };
-
-    const openModal = () => {
-        resetModal();
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-        window.setTimeout(() => firstInput?.focus(), 80);
-    };
-
-    const closeModal = () => {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-    };
-
-    openTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (event) => {
-            event.preventDefault();
-            openModal();
-        });
-    });
-
-    closeTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', () => {
-            closeModal();
-        });
-    });
-
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('is-open')) {
-            closeModal();
-        }
-    });
+    const form = section.querySelector('.lead-form');
+    const successState = section.querySelector('.lead-modal-success');
+    const firstInput = section.querySelector('input, select, textarea');
+    const resetTrigger = section.querySelector('[data-reset-lead-form]');
 
     if (!form) {
         return;
     }
+
+    const resetForm = ({ shouldFocus = false } = {}) => {
+        form.hidden = false;
+        form.reset();
+
+        if (successState) {
+            successState.hidden = true;
+        }
+
+        if (shouldFocus) {
+            window.setTimeout(() => firstInput?.focus(), 80);
+        }
+    };
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -240,7 +198,12 @@ function initLeadModal() {
 
         if (successState) {
             successState.hidden = false;
+            successState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+    });
+
+    resetTrigger?.addEventListener('click', () => {
+        resetForm({ shouldFocus: true });
     });
 }
 
