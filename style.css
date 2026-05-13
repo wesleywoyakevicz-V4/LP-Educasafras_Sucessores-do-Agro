@@ -2296,13 +2296,7 @@ strong {
 }
 
 .faculty-bio {
-    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.28s ease, padding-top 0.28s ease;
-}
-
-.faculty-bio[hidden] {
-    display: block;
 }
 
 .faculty-bio p {
@@ -2312,7 +2306,6 @@ strong {
 }
 
 .faculty-card.is-open .faculty-bio {
-    max-height: 240px;
     padding-top: 2px;
 }
 

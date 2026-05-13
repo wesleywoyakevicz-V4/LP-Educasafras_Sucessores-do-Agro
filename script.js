@@ -67,31 +67,12 @@ function initFacultyCards() {
             return;
         }
 
-        bio.hidden = true;
-        bio.style.maxHeight = '0px';
+        bio.hidden = !card.classList.contains('is-open');
 
         trigger.addEventListener('click', () => {
             const isOpen = card.classList.toggle('is-open');
             trigger.setAttribute('aria-expanded', String(isOpen));
-
-            if (isOpen) {
-                bio.hidden = false;
-                bio.style.maxHeight = `${bio.scrollHeight}px`;
-                return;
-            }
-
-            bio.style.maxHeight = `${bio.scrollHeight}px`;
-            window.requestAnimationFrame(() => {
-                bio.style.maxHeight = '0px';
-            });
-        });
-
-        bio.addEventListener('transitionend', (event) => {
-            if (event.propertyName !== 'max-height' || card.classList.contains('is-open')) {
-                return;
-            }
-
-            bio.hidden = true;
+            bio.hidden = !isOpen;
         });
     });
 }
