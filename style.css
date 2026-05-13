@@ -3222,7 +3222,7 @@ strong {
     }
 
     .faculty-card {
-        min-height: 100%;
+        min-height: 0;
         scroll-snap-align: start;
     }
 
