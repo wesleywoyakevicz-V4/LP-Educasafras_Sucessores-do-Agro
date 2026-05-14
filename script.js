@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    initContentOverrides();
     initFAQ();
     initCurriculumAccordion();
     initFacultyCards();
@@ -8,7 +9,82 @@ document.addEventListener('DOMContentLoaded', () => {
     initRevealAnimations();
     initNavbarState();
     initHeroSlideshow();
+    initTestimonialsCarousel();
 });
+
+function initContentOverrides() {
+    const heroCopy = document.querySelector('.hero-copy > p');
+    if (heroCopy) {
+        heroCopy.innerHTML = '<strong>70% das propriedades rurais não chegam à próxima geração.</strong> Formação que nasce para proteger décadas de trabalho, preservar o patrimônio e garantir continuidade ao legado familiar.';
+    }
+
+    const heroProofItems = document.querySelectorAll('.hero-proof-item');
+    if (heroProofItems[1]) {
+        heroProofItems[1].classList.add('hero-proof-item-edition');
+        const proofLabel = heroProofItems[1].querySelector('span');
+        if (proofLabel) {
+            proofLabel.textContent = '9ª Edição Consecutiva';
+        }
+    }
+
+    const pricingCards = document.querySelectorAll('.pricing-grid .price-card');
+    if (pricingCards[0]) {
+        const firstCard = pricingCards[0];
+        const firstText = firstCard.querySelector('p');
+        if (firstText) {
+            firstText.textContent = 'parcelamento disponível';
+        }
+        if (!firstCard.querySelector('ul')) {
+            const firstList = document.createElement('ul');
+            firstList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+            firstText?.insertAdjacentElement('afterend', firstList);
+        }
+    }
+
+    if (pricingCards[1]) {
+        const secondCard = pricingCards[1];
+        const secondBadge = secondCard.querySelector('.badge');
+        const secondText = secondCard.querySelector('p');
+        if (secondBadge) {
+            secondBadge.textContent = 'Últimas vagas';
+        }
+        if (secondText) {
+            secondText.textContent = 'parcelamento disponível';
+        }
+        const secondList = secondCard.querySelector('ul');
+        if (secondList) {
+            secondList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+        }
+    }
+
+    if (pricingCards[2]) {
+        const thirdCard = pricingCards[2];
+        const thirdText = thirdCard.querySelector('p');
+        if (thirdText) {
+            thirdText.textContent = 'parcelamento disponível';
+        }
+        if (!thirdCard.querySelector('ul')) {
+            const thirdList = document.createElement('ul');
+            thirdList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+            thirdText?.insertAdjacentElement('afterend', thirdList);
+        }
+    }
+}
 
 function updateTopbarSafeSpace() {
     const topbar = document.querySelector('.topbar');
@@ -222,6 +298,10 @@ function initRevealAnimations() {
         '.curriculum-item',
         '.feature-card',
         '.step-card',
+        '.testimonials-proof',
+        '.testimonials-track .testimonial-card',
+        '.testimonials-pagination',
+        '.testimonials-cta',
         '.faculty-card',
         '.price-card',
         '.faq-item',
@@ -251,6 +331,105 @@ function initRevealAnimations() {
         element.style.transitionDelay = `${Math.min(index * 40, 320)}ms`;
         observer.observe(element);
     });
+}
+
+function initTestimonialsCarousel() {
+    const carousel = document.querySelector('[data-testimonials-carousel]');
+    if (!carousel) {
+        return;
+    }
+
+    const track = carousel.querySelector('[data-testimonials-track]');
+    const prevButton = carousel.querySelector('[data-testimonials-prev]');
+    const nextButton = carousel.querySelector('[data-testimonials-next]');
+    const pagination = document.querySelector('[data-testimonials-pagination]');
+    const cards = track ? Array.from(track.querySelectorAll('.testimonial-card')) : [];
+
+    if (!track || !prevButton || !nextButton || !pagination || cards.length < 2) {
+        return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 900px)');
+    let pageCount = 1;
+    let activePage = 0;
+    let dots = [];
+
+    const getSlidesPerPage = () => (mobileQuery.matches ? 1 : 2);
+
+    const getPageOffset = (page) => {
+        const targetIndex = Math.min(page * getSlidesPerPage(), cards.length - 1);
+        const targetCard = cards[targetIndex];
+        if (!targetCard) {
+            return 0;
+        }
+
+        return targetCard.offsetLeft - cards[0].offsetLeft;
+    };
+
+    const setActiveDot = (page) => {
+        dots.forEach((dot, dotIndex) => {
+            dot.classList.toggle('is-active', dotIndex === page);
+            dot.setAttribute('aria-current', dotIndex === page ? 'true' : 'false');
+        });
+    };
+
+    const updateFromScroll = () => {
+        const offset = track.scrollLeft;
+        let closestPage = 0;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        for (let page = 0; page < pageCount; page += 1) {
+            const distance = Math.abs(offset - getPageOffset(page));
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPage = page;
+            }
+        }
+
+        activePage = closestPage;
+        setActiveDot(activePage);
+    };
+
+    const scrollToPage = (page) => {
+        activePage = (page + pageCount) % pageCount;
+        track.scrollTo({
+            left: getPageOffset(activePage),
+            behavior: 'smooth'
+        });
+        setActiveDot(activePage);
+    };
+
+    const rebuildPagination = () => {
+        pageCount = Math.max(1, Math.ceil(cards.length / getSlidesPerPage()));
+        activePage = Math.min(activePage, pageCount - 1);
+        pagination.innerHTML = '';
+        dots = Array.from({ length: pageCount }, (_, page) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Ir para a pagina ${page + 1} dos depoimentos`);
+            dot.addEventListener('click', () => scrollToPage(page));
+            pagination.appendChild(dot);
+            return dot;
+        });
+        setActiveDot(activePage);
+        track.scrollLeft = getPageOffset(activePage);
+    };
+
+    prevButton.addEventListener('click', () => scrollToPage(activePage - 1));
+    nextButton.addEventListener('click', () => scrollToPage(activePage + 1));
+    track.addEventListener('scroll', () => {
+        window.requestAnimationFrame(updateFromScroll);
+    }, { passive: true });
+
+    const handleViewportChange = () => rebuildPagination();
+    if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', handleViewportChange);
+    } else if (typeof mobileQuery.addListener === 'function') {
+        mobileQuery.addListener(handleViewportChange);
+    }
+
+    window.addEventListener('resize', rebuildPagination, { passive: true });
+    rebuildPagination();
 }
 
 function initNavbarState() {
