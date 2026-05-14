@@ -3286,7 +3286,7 @@ strong {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         width: min(100%, 360px);
-        gap: 10px;
+        gap: 8px;
         margin: 16px auto 0;
     }
 
@@ -3303,6 +3303,14 @@ strong {
         font-size: 0.56rem;
         line-height: 1.28;
         letter-spacing: 0.1em;
+    }
+
+    .hero-proof-item-edition span {
+        white-space: normal;
+        font-size: 0.47rem;
+        line-height: 1.18;
+        letter-spacing: 0.03em;
+        max-width: 62px;
     }
 
     .section {

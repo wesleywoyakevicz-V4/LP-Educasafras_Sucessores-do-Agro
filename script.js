@@ -21,9 +21,13 @@ function initContentOverrides() {
     const heroProofItems = document.querySelectorAll('.hero-proof-item');
     if (heroProofItems[1]) {
         heroProofItems[1].classList.add('hero-proof-item-edition');
+        const proofValue = heroProofItems[1].querySelector('strong');
         const proofLabel = heroProofItems[1].querySelector('span');
+        if (proofValue) {
+            proofValue.textContent = '9ª';
+        }
         if (proofLabel) {
-            proofLabel.textContent = '9ª Edição Consecutiva';
+            proofLabel.textContent = 'Edição Consecutiva';
         }
     }
 
