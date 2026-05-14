@@ -2054,6 +2054,8 @@ strong {
     z-index: 2;
     margin-bottom: -168px;
     pointer-events: none;
+    padding: 42px 0 126px;
+    background: linear-gradient(180deg, #f3f7f8 0 50%, #043c43 50% 100%);
 }
 
 .testimonials-divider-shell {
@@ -2063,10 +2065,17 @@ strong {
 
 .testimonials-section {
     overflow: visible;
+    background: #043c43;
+}
+
+.testimonials-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
     background:
-        radial-gradient(circle at 12% 14%, rgba(253, 177, 5, 0.08), transparent 18%),
-        radial-gradient(circle at 84% 82%, rgba(0, 128, 89, 0.16), transparent 28%),
-        linear-gradient(180deg, #032d35 0%, #043c43 100%);
+        radial-gradient(circle at 50% 0, rgba(253, 177, 5, 0.05), transparent 22%),
+        radial-gradient(circle at 84% 82%, rgba(0, 128, 89, 0.12), transparent 28%);
 }
 
 .testimonials-shell {
@@ -2243,19 +2252,6 @@ strong {
         0 18px 44px rgba(1, 16, 20, 0.18);
 }
 
-.testimonial-card::before {
-    content: '"';
-    position: absolute;
-    top: 20px;
-    left: 26px;
-    color: rgba(253, 177, 5, 0.24);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 4.8rem;
-    font-weight: 800;
-    line-height: 1;
-    pointer-events: none;
-}
-
 .testimonial-quote {
     position: relative;
     z-index: 1;
@@ -2362,6 +2358,8 @@ strong {
 }
 
 .step-card {
+    display: grid;
+    align-content: start;
     min-height: 100%;
 }
 
@@ -2404,6 +2402,8 @@ strong {
 
 .faculty-card {
     overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
     border-radius: 24px;
     border: 1px solid rgba(20, 56, 74, 0.12);
     background: #ffffff;
@@ -3036,6 +3036,30 @@ strong {
 }
 
 @media (max-width: 760px) {
+    .reveal,
+    .reveal.is-visible,
+    .section-header,
+    .faculty-card,
+    .step-card,
+    .testimonials-track .testimonial-card,
+    .testimonials-pagination,
+    .testimonials-cta {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .section-header,
+    .faculty-card,
+    .step-card,
+    .testimonials-track .testimonial-card,
+    .testimonials-pagination,
+    .testimonials-cta {
+        will-change: auto;
+    }
+
     .topbar {
         inset: 12px 0 auto;
         padding: 0 14px;
@@ -3400,31 +3424,32 @@ strong {
         grid-auto-columns: minmax(84%, 1fr);
         grid-template-columns: none;
         gap: 16px;
+        align-items: stretch;
         overflow-x: auto;
         overscroll-behavior-x: contain;
-        padding: 4px 4px 14px;
-        margin: 0 -4px;
+        padding: 4px 4px 2px;
+        margin: 0 -4px 0;
         scroll-snap-type: x mandatory;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(23, 69, 85, 0.24) rgba(23, 69, 85, 0.08);
+        scrollbar-width: none;
     }
 
     .faculty-grid::-webkit-scrollbar {
-        height: 8px;
+        display: none;
     }
 
     .faculty-grid::-webkit-scrollbar-track {
-        background: rgba(23, 69, 85, 0.08);
+        background: transparent;
         border-radius: 999px;
     }
 
     .faculty-grid::-webkit-scrollbar-thumb {
-        background: rgba(23, 69, 85, 0.24);
+        background: transparent;
         border-radius: 999px;
     }
 
     .faculty-card {
-        min-height: 0;
+        min-height: 100%;
+        box-shadow: none;
         scroll-snap-align: start;
     }
 
@@ -3432,8 +3457,13 @@ strong {
         min-height: 220px;
     }
 
+    .faculty-body {
+        min-height: 174px;
+        align-content: start;
+    }
+
     .faculty-topic {
-        min-height: 0;
+        min-height: 72px;
     }
 
     .faculty-header h2 {
@@ -3453,6 +3483,18 @@ strong {
 
     .testimonials-divider {
         margin-bottom: -110px;
+        padding: 28px 0 82px;
+        background: linear-gradient(
+            180deg,
+            #f3f7f8 0 36%,
+            #e6f0f1 44%,
+            #043c43 58%,
+            #043c43 100%
+        );
+    }
+
+    .testimonials-section {
+        background: #043c43;
     }
 
     .testimonials-proof {
@@ -3480,25 +3522,23 @@ strong {
     .testimonials-track {
         --testimonials-gap: 16px;
         grid-auto-columns: minmax(84%, 1fr);
-        padding: 4px 4px 14px;
-        margin: 0 -4px;
+        padding: 4px 4px 2px;
+        margin: 0 -4px 0;
         overscroll-behavior-x: contain;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(173, 221, 228, 0.24) rgba(173, 221, 228, 0.08);
+        scrollbar-width: none;
     }
 
     .testimonials-track::-webkit-scrollbar {
-        display: block;
-        height: 8px;
+        display: none;
     }
 
     .testimonials-track::-webkit-scrollbar-track {
-        background: rgba(173, 221, 228, 0.08);
+        background: transparent;
         border-radius: 999px;
     }
 
     .testimonials-track::-webkit-scrollbar-thumb {
-        background: rgba(173, 221, 228, 0.24);
+        background: transparent;
         border-radius: 999px;
     }
 
@@ -3508,6 +3548,7 @@ strong {
 
     .testimonial-card {
         padding: 28px 22px 24px;
+        box-shadow: none;
     }
 
     .testimonials-carousel-hint {
@@ -3554,30 +3595,43 @@ strong {
         grid-template-columns: none;
         overflow-x: auto;
         overscroll-behavior-x: contain;
-        padding: 4px 4px 14px;
-        margin: 0 -4px;
+        padding: 4px 4px 2px;
+        margin: 0 -4px 0;
         scroll-snap-type: x mandatory;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(23, 69, 85, 0.24) rgba(23, 69, 85, 0.08);
+        scrollbar-width: none;
     }
 
     .process-grid::-webkit-scrollbar {
-        height: 8px;
+        display: none;
     }
 
     .process-grid::-webkit-scrollbar-track {
-        background: rgba(23, 69, 85, 0.08);
+        background: transparent;
         border-radius: 999px;
     }
 
     .process-grid::-webkit-scrollbar-thumb {
-        background: rgba(23, 69, 85, 0.24);
+        background: transparent;
         border-radius: 999px;
     }
 
     .step-card {
         min-height: 100%;
+        box-shadow: none;
         scroll-snap-align: start;
+        align-content: start;
+    }
+
+    .process-grid {
+        align-items: stretch;
+    }
+
+    .step-card h3 {
+        min-height: 44px;
+    }
+
+    .step-card p {
+        min-height: 112px;
     }
 
     .process-carousel-hint {
