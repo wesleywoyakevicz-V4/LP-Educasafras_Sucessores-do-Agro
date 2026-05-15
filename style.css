@@ -923,6 +923,12 @@ strong {
     transform: scale(1);
 }
 
+.hero-bg-slide picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .hero-bg-slide img {
     width: 100%;
     height: 100%;
@@ -1915,8 +1921,55 @@ strong {
     padding-bottom: 28px;
 }
 
+.curriculum-hook {
+    font-weight: 600;
+    color: #34525d;
+}
+
+.curriculum-topics {
+    max-width: 62ch;
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.curriculum-topics li {
+    position: relative;
+    padding-left: 24px;
+    color: #58717b;
+    font-size: 0.98rem;
+    line-height: 1.65;
+}
+
+.curriculum-topics li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--highlight);
+    box-shadow: 0 0 0 6px rgba(253, 177, 5, 0.14);
+    transform: translateY(-50%);
+}
+
+.curriculum-result {
+    max-width: 62ch;
+    padding: 18px 20px 24px;
+    border-radius: 20px;
+    background: rgba(253, 177, 5, 0.1);
+    color: #35515b;
+}
+
+.curriculum-result strong {
+    color: #123340;
+}
+
 .curriculum-item.is-open .curriculum-content {
-    max-height: 220px;
+    max-height: 820px;
     padding: 0 58px 0 206px;
 }
 
@@ -2629,6 +2682,40 @@ strong {
     color: rgba(23, 69, 85, 0.58);
 }
 
+.points-rescue-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 28px;
+    margin-top: 34px;
+    padding: 40px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 24px 50px rgba(23, 69, 85, 0.06);
+}
+
+.points-rescue-copy h3 {
+    color: #082f45;
+    font-size: clamp(1.45rem, 2.6vw, 2rem);
+    letter-spacing: -0.04em;
+}
+
+.points-rescue-copy p {
+    margin-top: 12px;
+    max-width: 32rem;
+    color: #667b86;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.points-rescue-btn {
+    min-width: 280px;
+    min-height: 56px;
+    padding-inline: 28px;
+    white-space: nowrap;
+}
+
 .faq-list {
     display: grid;
     gap: 12px;
@@ -2685,7 +2772,7 @@ strong {
     position: relative;
     width: min(980px, 100%);
     margin: 0 auto;
-    padding: 32px 28px 28px;
+    padding: 34px 28px 28px;
     border-radius: 32px;
     border: 1px solid rgba(72, 113, 122, 0.34);
     background:
@@ -2698,17 +2785,20 @@ strong {
 }
 
 .lead-modal-copy {
-    max-width: 780px;
-    margin: 0 0 26px;
-    padding-right: 64px;
+    max-width: 840px;
+    margin: 0 0 20px;
+    padding-left: 47px;
+    padding-right: 24px;
     text-align: left;
 }
 
 .lead-modal-copy h2 {
     color: #ffffff;
-    font-size: clamp(2.4rem, 5vw, 4.6rem);
-    line-height: 1.08;
-    letter-spacing: -0.06em;
+    max-width: 27ch;
+    font-size: clamp(1.5rem, 2.15vw, 2.2rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
 }
 
 .lead-modal-copy h2 span {
@@ -2717,10 +2807,11 @@ strong {
 
 .lead-modal-copy p,
 .lead-modal-success p {
-    margin-top: 18px;
+    margin-top: 14px;
     color: rgba(199, 221, 226, 0.82);
-    font-size: 1rem;
-    line-height: 1.7;
+    max-width: 60ch;
+    font-size: 0.94rem;
+    line-height: 1.62;
 }
 
 .lead-form {
@@ -2776,6 +2867,27 @@ strong {
 
 .lead-field select {
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color-scheme: dark;
+    padding-right: 52px;
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(245, 251, 251, 0.86) 50%),
+        linear-gradient(135deg, rgba(245, 251, 251, 0.86) 50%, transparent 50%);
+    background-position:
+        calc(100% - 24px) calc(50% - 2px),
+        calc(100% - 18px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+.lead-field select option {
+    background: #10303c;
+    color: #f5fbfb;
+}
+
+.lead-field select option[value=""] {
+    color: rgba(245, 251, 251, 0.72);
 }
 
 .lead-field input:focus,
@@ -2824,6 +2936,61 @@ strong {
 
 .lead-modal-success .btn {
     margin-top: 18px;
+}
+
+.whatsapp-float {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 120;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 60px;
+    padding: 12px 18px 12px 12px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #28d061 0%, #18b652 100%);
+    color: #ffffff;
+    box-shadow:
+        0 22px 44px rgba(8, 40, 19, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow:
+        0 28px 54px rgba(8, 40, 19, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+}
+
+.whatsapp-float:focus-visible {
+    outline: 3px solid rgba(253, 177, 5, 0.52);
+    outline-offset: 4px;
+}
+
+.whatsapp-float-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    flex: none;
+}
+
+.whatsapp-float-icon svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+.whatsapp-float-label {
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .footer {
@@ -3404,6 +3571,11 @@ strong {
         max-width: none;
     }
 
+    .curriculum-topics,
+    .curriculum-result {
+        max-width: none;
+    }
+
     .curriculum-content,
     .curriculum-item.is-open .curriculum-content {
         padding: 0 0 0 0;
@@ -3413,6 +3585,16 @@ strong {
         padding-bottom: 18px;
         font-size: 0.95rem;
         line-height: 1.55;
+    }
+
+    .curriculum-topics li {
+        font-size: 0.93rem;
+        line-height: 1.55;
+    }
+
+    .curriculum-result {
+        padding: 16px 16px 20px;
+        border-radius: 18px;
     }
 
     .faculty-shell {
@@ -3584,6 +3766,25 @@ strong {
         white-space: normal;
     }
 
+    .points-rescue-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 24px;
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .points-rescue-copy p {
+        max-width: none;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .points-rescue-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
     .faq-question span {
         line-height: 1.3;
         text-wrap: balance;
@@ -3644,8 +3845,10 @@ strong {
     }
 
     .lead-modal-copy {
-        margin-bottom: 22px;
+        margin-bottom: 18px;
+        padding-left: 0;
         padding-right: 0;
+        text-align: center;
     }
 
     .lead-form {
@@ -3662,13 +3865,40 @@ strong {
     }
 
     .lead-modal-copy h2 {
-        font-size: clamp(1.8rem, 9vw, 2.7rem);
-        line-height: 1.04;
+        max-width: 19ch;
+        font-size: clamp(1.42rem, 6.9vw, 2rem);
+        line-height: 0.98;
+        margin-inline: auto;
     }
 
     .lead-modal-copy p,
     .lead-modal-success p {
-        font-size: 0.96rem;
+        max-width: none;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        text-align: center;
+    }
+
+    .whatsapp-float {
+        right: 14px;
+        bottom: 14px;
+        min-height: 56px;
+        padding: 10px 14px 10px 10px;
+        gap: 10px;
+    }
+
+    .whatsapp-float-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .whatsapp-float-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .whatsapp-float-label {
+        font-size: 0.82rem;
     }
 }
 

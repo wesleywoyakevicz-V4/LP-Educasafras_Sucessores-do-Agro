@@ -12,7 +12,271 @@ document.addEventListener('DOMContentLoaded', () => {
     initTestimonialsCarousel();
 });
 
+function applyFAQOverrides() {
+    const faqHeader = document.querySelector('.faq .section-header');
+    const faqList = document.querySelector('.faq-list');
+
+    if (faqHeader) {
+        faqHeader.innerHTML = `
+            <span class="eyebrow">Perguntas frequentes</span>
+            <h2>Tire suas d&uacute;vidas antes de garantir sua vaga.</h2>
+            <p>Tire suas d&uacute;vidas sobre a imers&atilde;o, formas de pagamento e como garantir sua vaga.</p>
+        `;
+    }
+
+    if (faqList) {
+        faqList.innerHTML = `
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Preciso ter experi&ecirc;ncia em gest&atilde;o para participar?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>N&atilde;o. O programa foi desenhado para diferentes n&iacute;veis de maturidade. Temos alunos que est&atilde;o come&ccedil;ando a se envolver no neg&oacute;cio e outros que j&aacute; lideram opera&ccedil;&otilde;es. O conte&uacute;do &eacute; aplic&aacute;vel para todos.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Qual &eacute; a dura&ccedil;&atilde;o e formato da imers&atilde;o?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>S&atilde;o 5 m&oacute;dulos presenciais realizados em Goi&acirc;nia/GO, com conte&uacute;do intensivo que combina aulas, cases pr&aacute;ticos, din&acirc;micas em grupo e networking com sucessores de todo o Brasil.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>O curso oferece certificado?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim. Ao concluir a imers&atilde;o, voc&ecirc; recebe um certificado de conclus&atilde;o do programa Sucessores do Agro pela Educasafras.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Quais s&atilde;o as formas de pagamento?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Aceitamos pagamento &agrave; vista ou parcelado. Para conhecer as condi&ccedil;&otilde;es de parcelamento dispon&iacute;veis, entre em contato com nosso time atrav&eacute;s do formul&aacute;rio ou WhatsApp.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Como funciona a pol&iacute;tica de cancelamento?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Oferecemos condi&ccedil;&otilde;es flex&iacute;veis de cancelamento. Entre em contato com nosso time para conhecer os prazos e condi&ccedil;&otilde;es detalhadas.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Onde ser&aacute; realizada a imers&atilde;o e onde posso me hospedar?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>A imers&atilde;o acontece na sede da Safras &amp; Cifras em Goi&acirc;nia/GO. Os participantes contam com parcerias exclusivas em hot&eacute;is pr&oacute;ximos ao local, com tarifas reduzidas. Ap&oacute;s a inscri&ccedil;&atilde;o, voc&ecirc; receber&aacute; os detalhes dos hot&eacute;is parceiros e orienta&ccedil;&otilde;es para reserva com desconto.</p>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function applyCurriculumOverrides() {
+    const curriculumHeader = document.querySelector('.curriculum-intro .section-header');
+    const curriculumList = document.querySelector('.curriculum-list');
+
+    if (curriculumHeader) {
+        curriculumHeader.innerHTML = `
+            <h2>O que voc&ecirc; vai dominar</h2>
+            <p>De fam&iacute;lia a empresa. 5 m&oacute;dulos que cobrem sucess&atilde;o, patrim&ocirc;nio, tributos, finan&ccedil;as e governan&ccedil;a.</p>
+        `;
+    }
+
+    if (curriculumList) {
+        curriculumList.innerHTML = `
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">01</span>
+                    <span class="curriculum-title">A Nova Gera&ccedil;&atilde;o do Agro e o Papel do Sucessor</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <p class="curriculum-hook">Antes de liderar o neg&oacute;cio, voc&ecirc; precisa entender o seu lugar dentro dele. Quem voc&ecirc; &eacute; na fam&iacute;lia empres&aacute;ria define como voc&ecirc; vai conduzir a transi&ccedil;&atilde;o.</p>
+                    <ul class="curriculum-topics">
+                        <li>Estrutura e evolu&ccedil;&atilde;o da fam&iacute;lia empres&aacute;ria</li>
+                        <li>Ciclos geracionais e suas complexidades</li>
+                        <li>Vantagens e desafios das empresas familiares</li>
+                        <li>Desenvolvimento de herdeiros e sucessores</li>
+                        <li>Gest&atilde;o da continuidade e sustentabilidade do legado familiar</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; desenvolve leitura sist&ecirc;mica dos pap&eacute;is familiares e empresariais, autoconhecimento socioemocional e capacidade de liderar a transi&ccedil;&atilde;o entre gera&ccedil;&otilde;es.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">02</span>
+                    <span class="curriculum-title">Holding Rural: Gest&atilde;o, Sociedade e Sucess&atilde;o</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <p class="curriculum-hook">O patrim&ocirc;nio que sua fam&iacute;lia levou d&eacute;cadas para construir pode ser desfeito em uma &uacute;nica decis&atilde;o mal planejada. Estruturar juridicamente n&atilde;o &eacute; op&ccedil;&atilde;o, &eacute; prote&ccedil;&atilde;o.</p>
+                    <ul class="curriculum-topics">
+                        <li>Empresa rural familiar: caracter&iacute;sticas, vantagens e desafios</li>
+                        <li>Sistema dos 3 c&iacute;rculos: Fam&iacute;lia, Neg&oacute;cio e Patrim&ocirc;nio</li>
+                        <li>Planejamento sucess&oacute;rio e riscos patrimoniais</li>
+                        <li>Holding familiar e pilares do contrato social</li>
+                        <li>Regimes de casamento e impacto sucess&oacute;rio</li>
+                        <li>Transfer&ecirc;ncia e sucess&atilde;o de patrim&ocirc;nio</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com dom&iacute;nio sobre planejamento sucess&oacute;rio estrat&eacute;gico e jur&iacute;dico, an&aacute;lise de risco patrimonial, estrutura&ccedil;&atilde;o societ&aacute;ria e entendimento sobre regimes de bens, testamentos e heran&ccedil;a.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">03</span>
+                    <span class="curriculum-title">Reforma Tribut&aacute;ria no Agro</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <p class="curriculum-hook">O sistema tribut&aacute;rio brasileiro est&aacute; mudando. Quem entender primeiro as novas regras vai proteger margem, evitar surpresas e sair na frente na transi&ccedil;&atilde;o.</p>
+                    <ul class="curriculum-topics">
+                        <li>O novo modelo tribut&aacute;rio: IBS, CBS e o fim do sistema atual</li>
+                        <li>Impactos diretos da reforma para o produtor rural PF e PJ</li>
+                        <li>Regime espec&iacute;fico do agro: o que muda e o que permanece</li>
+                        <li>Cr&eacute;ditos tribut&aacute;rios na nova l&oacute;gica e a n&atilde;o cumulatividade plena</li>
+                        <li>Per&iacute;odo de transi&ccedil;&atilde;o: cronograma, riscos e oportunidades</li>
+                        <li>Planejamento tribut&aacute;rio rural no novo cen&aacute;rio</li>
+                        <li>Estrat&eacute;gias de adequa&ccedil;&atilde;o para holdings e empresas familiares do agro</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com dom&iacute;nio sobre o novo sistema tribut&aacute;rio e seus impactos no agro, capacidade de planejar a transi&ccedil;&atilde;o com seguran&ccedil;a e vis&atilde;o estrat&eacute;gica para proteger o resultado do neg&oacute;cio familiar.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">04</span>
+                    <span class="curriculum-title">Gest&atilde;o Financeira Estrat&eacute;gica na Atividade Rural</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <p class="curriculum-hook">Faturar alto e n&atilde;o saber onde o dinheiro vai &eacute; o erro mais comum do agro. E o mais caro. Decis&atilde;o sem dado &eacute; aposta.</p>
+                    <ul class="curriculum-topics">
+                        <li>Diferen&ccedil;a entre resultado econ&ocirc;mico e financeiro</li>
+                        <li>Classifica&ccedil;&atilde;o e an&aacute;lise de custos e despesas</li>
+                        <li>Plano de contas e centros de custos</li>
+                        <li>Ferramentas de gest&atilde;o: fluxo de caixa, DRE e indicadores</li>
+                        <li>Planejamento de metas e balan&ccedil;o patrimonial</li>
+                        <li>Etapas para gest&atilde;o financeira eficiente</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai lendo demonstra&ccedil;&otilde;es financeiras e indicadores, com capacidade de planejamento or&ccedil;ament&aacute;rio e tomada de decis&atilde;o baseada em dados financeiros reais do seu neg&oacute;cio.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">05</span>
+                    <span class="curriculum-title">Gest&atilde;o e Governan&ccedil;a em Empresas Rurais Familiares</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <p class="curriculum-hook">Sem regras claras, at&eacute; a fam&iacute;lia mais unida se divide quando o assunto &eacute; dinheiro e poder. Governan&ccedil;a n&atilde;o &eacute; burocracia, &eacute; o que mant&eacute;m o neg&oacute;cio de p&eacute; entre gera&ccedil;&otilde;es.</p>
+                    <ul class="curriculum-topics">
+                        <li>Governan&ccedil;a: teoria, pr&aacute;tica e aplica&ccedil;&atilde;o no agro</li>
+                        <li>Governan&ccedil;a Corporativa e Governan&ccedil;a Familiar</li>
+                        <li>&Oacute;rg&atilde;os de governan&ccedil;a e protocolo familiar</li>
+                        <li>Objetivos e planos da fam&iacute;lia empres&aacute;ria</li>
+                        <li>Estrutura organizacional e remunera&ccedil;&atilde;o</li>
+                        <li>C&oacute;digo de conduta, miss&atilde;o, vis&atilde;o e valores</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com capacidade de implantar mecanismos de governan&ccedil;a corporativa, estruturar conselhos, protocolos e regras familiares, e construir uma cultura organizacional alinhada ao legado.</p>
+                </div>
+            </article>
+        `;
+    }
+}
+
+function repositionPointsRescueCard() {
+    const pointsCard = document.querySelector('.points-rescue-card');
+    const pricingGrid = document.querySelector('.pricing-grid');
+
+    if (!pointsCard || !pricingGrid) {
+        return;
+    }
+
+    if (pricingGrid.nextElementSibling !== pointsCard) {
+        pricingGrid.insertAdjacentElement('afterend', pointsCard);
+    }
+
+    const pointsCopy = pointsCard.querySelector('.points-rescue-copy');
+    const pointsButton = pointsCard.querySelector('.points-rescue-btn');
+
+    if (pointsCopy) {
+        pointsCopy.innerHTML = `
+            <h3>Dispon&iacute;vel para Resgate de Pontos</h3>
+            <p>Voc&ecirc; pode utilizar seus pontos para participar da imers&atilde;o. Fale com um consultor para saber as condi&ccedil;&otilde;es e plataformas aceitas.</p>
+        `;
+    }
+
+    if (pointsButton) {
+        pointsButton.href = 'https://api.whatsapp.com/send/?phone=556296771552&text=Ol%C3%A1%2C+gostaria+de+saber+sobre+o+resgate+de+pontos+para+o+Sucessores+do+Agro+-+9%C2%AA+Edi%C3%A7%C3%A3o%21&type=phone_number&app_absent=0';
+        pointsButton.innerHTML = 'Falar com consultor <span>&rarr;</span>';
+    }
+}
+
+function applyFacultyOverrides() {
+    const facultyData = [
+        {
+            name: 'Sandro Elias',
+            module: 'A Nova Geração do Agro e o Papel do Sucessor',
+            bio: 'Sócio e Diretor da Safras & Cifras e Educasafras. Especialista em Gestão de Empresas pela Harvard (USA). Consultor em Planejamento Sucessório, Tributação e Governança há mais de 20 anos.'
+        },
+        {
+            name: 'Alessandra Braga',
+            module: 'Holding Rural: Gestão, Sociedade e Sucessão',
+            bio: 'Advogada, formada pela PUC Goiás, especialista em Direito Empresarial pelo Instituto Damasio e Gestão Patrimonial pelo Insper. Coordenadora Regional da Safras & Cifras.'
+        },
+        {
+            name: 'Augusto Moura',
+            module: 'Reforma Tributária no Agro',
+            bio: 'Sócio Consultor da Safras & Cifras. Advogado Tributarista com experiência em implantação de estruturas de organização e planejamento tributário com ênfase no agronegócio.'
+        },
+        {
+            name: 'Vinícius Kaefer',
+            module: 'Gestão Financeira Estratégica na Atividade Rural',
+            bio: 'Engenheiro de Produção pela UFPEL, com especialização em Finanças. Consultor da Safras & Cifras, responsável pelo setor de Gestão Econômica e Financeira.'
+        },
+        {
+            name: 'Tais Leivas',
+            module: 'Gestão e Governança em Empresas Rurais Familiares',
+            bio: 'Psicóloga, sócia e consultora de Governança e Sucessão na Safras & Cifras. Especialista Educasafras.'
+        }
+    ];
+
+    document.querySelectorAll('.faculty-card').forEach((card) => {
+        const nameEl = card.querySelector('h3');
+        const topicEl = card.querySelector('.faculty-topic');
+        const bioEl = card.querySelector('.faculty-bio p');
+
+        if (!nameEl || !topicEl || !bioEl) {
+            return;
+        }
+
+        const match = facultyData.find((item) => item.name === nameEl.textContent.trim());
+        if (!match) {
+            return;
+        }
+
+        topicEl.textContent = match.module;
+        bioEl.textContent = match.bio;
+    });
+}
+
 function initContentOverrides() {
+    applyCurriculumOverrides();
+    applyFAQOverrides();
+    applyFacultyOverrides();
+    repositionPointsRescueCard();
     const heroCopy = document.querySelector('.hero-copy > p');
     if (heroCopy) {
         heroCopy.innerHTML = '<strong>70% das propriedades rurais não chegam à próxima geração.</strong> Formação que nasce para proteger décadas de trabalho, preservar o patrimônio e garantir continuidade ao legado familiar.';
@@ -139,12 +403,44 @@ function initCurriculumAccordion() {
 }
 
 function initFacultyCards() {
+    const facultyData = {
+        'Sandro Elias': {
+            module: 'A Nova Geração do Agro e o Papel do Sucessor',
+            bio: 'Sócio e Diretor da Safras & Cifras e Educasafras. Especialista em Gestão de Empresas pela Harvard (USA). Consultor em Planejamento Sucessório, Tributação e Governança há mais de 20 anos.'
+        },
+        'Alessandra Braga': {
+            module: 'Holding Rural: Gestão, Sociedade e Sucessão',
+            bio: 'Advogada, formada pela PUC Goiás, especialista em Direito Empresarial pelo Instituto Damasio e Gestão Patrimonial pelo Insper. Coordenadora Regional da Safras & Cifras.'
+        },
+        'Augusto Moura': {
+            module: 'Reforma Tributária no Agro',
+            bio: 'Sócio Consultor da Safras & Cifras. Advogado Tributarista com experiência em implantação de estruturas de organização e planejamento tributário com ênfase no agronegócio.'
+        },
+        'Vinícius Kaefer': {
+            module: 'Gestão Financeira Estratégica na Atividade Rural',
+            bio: 'Engenheiro de Produção pela UFPEL, com especialização em Finanças. Consultor da Safras & Cifras, responsável pelo setor de Gestão Econômica e Financeira.'
+        },
+        'Tais Leivas': {
+            module: 'Gestão e Governança em Empresas Rurais Familiares',
+            bio: 'Psicóloga, sócia e consultora de Governança e Sucessão na Safras & Cifras. Especialista Educasafras.'
+        }
+    };
+
     document.querySelectorAll('.faculty-card').forEach((card) => {
         const trigger = card.querySelector('.faculty-toggle');
         const bio = card.querySelector('.faculty-bio');
+        const nameEl = card.querySelector('h3');
+        const topicEl = card.querySelector('.faculty-topic');
+        const bioText = card.querySelector('.faculty-bio p');
 
-        if (!trigger || !bio) {
+        if (!trigger || !bio || !nameEl || !topicEl || !bioText) {
             return;
+        }
+
+        const content = facultyData[nameEl.textContent.trim()];
+        if (content) {
+            topicEl.textContent = content.module;
+            bioText.textContent = content.bio;
         }
 
         bio.hidden = !card.classList.contains('is-open');
