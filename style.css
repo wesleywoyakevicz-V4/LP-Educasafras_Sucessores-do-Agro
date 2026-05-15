@@ -1918,27 +1918,22 @@ strong {
     color: #58717b;
     font-size: 1rem;
     line-height: 1.7;
-    padding-bottom: 28px;
-}
-
-.curriculum-hook {
-    font-weight: 600;
-    color: #34525d;
+    padding-bottom: 0;
 }
 
 .curriculum-topics {
     max-width: 62ch;
-    margin: 0 0 22px;
+    margin: 0 0 18px;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 10px;
+    gap: 12px;
 }
 
 .curriculum-topics li {
     position: relative;
-    padding-left: 24px;
-    color: #58717b;
+    padding-left: 34px;
+    color: #4b6670;
     font-size: 0.98rem;
     line-height: 1.65;
 }
@@ -1947,21 +1942,22 @@ strong {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.65em;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--highlight);
-    box-shadow: 0 0 0 6px rgba(253, 177, 5, 0.14);
-    transform: translateY(-50%);
+    top: 0.18em;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg fill='none' height='512' viewBox='0 0 24 24' width='512' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgb(0%2C128%2C89)'%3E%3Cpath d='m16.7682 9.64055c.3536-.42427.2963-1.05483-.128-1.40841s-1.0548-.29627-1.4084.128l-4.299 5.15846-2.2257-2.2257c-.39052-.3905-1.02369-.3905-1.41421 0-.39053.3905-.39053 1.0237 0 1.4142l3.00001 3c.1987.1987.4717.3046.7524.2919.2807-.0128.543-.143.7229-.3588z'/%3E%3Cpath clip-rule='evenodd' d='m7 2c-2.76142 0-5 2.23858-5 5v10c0 2.7614 2.23858 5 5 5h10c2.7614 0 5-2.2386 5-5v-10c0-2.76142-2.2386-5-5-5zm-3 5c0-1.65685 1.34315-3 3-3h10c1.6569 0 3 1.34315 3 3v10c0 1.6569-1.3431 3-3 3h-10c-1.65685 0-3-1.3431-3-3z' fill-rule='evenodd'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 .curriculum-result {
     max-width: 62ch;
-    padding: 18px 20px 24px;
-    border-radius: 20px;
-    background: rgba(253, 177, 5, 0.1);
-    color: #35515b;
+    margin: 0 0 8px;
+    padding: 6px 0 10px;
+    color: #4b6670;
+    font-size: 0.98rem;
+    line-height: 1.65;
 }
 
 .curriculum-result strong {
@@ -2945,23 +2941,16 @@ strong {
     z-index: 120;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    min-height: 60px;
-    padding: 12px 18px 12px 12px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #28d061 0%, #18b652 100%);
-    color: #ffffff;
-    box-shadow:
-        0 22px 44px rgba(8, 40, 19, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    transition: transform 0.22s ease, filter 0.22s ease;
 }
 
 .whatsapp-float:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow:
-        0 28px 54px rgba(8, 40, 19, 0.34),
-        0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+    transform: translateY(-2px) scale(1.03);
+    filter: drop-shadow(0 18px 30px rgba(8, 40, 19, 0.22));
 }
 
 .whatsapp-float:focus-visible {
@@ -2972,25 +2961,15 @@ strong {
 .whatsapp-float-icon {
     display: inline-grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.16);
+    width: 58px;
+    height: 58px;
     flex: none;
 }
 
-.whatsapp-float-icon svg {
-    width: 22px;
-    height: 22px;
+.whatsapp-float-icon img {
+    width: 58px;
+    height: 58px;
     display: block;
-}
-
-.whatsapp-float-label {
-    font-size: 0.92rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    white-space: nowrap;
 }
 
 .footer {
@@ -3389,8 +3368,47 @@ strong {
         padding: calc(var(--topbar-safe-space) + 36px) 0 42px;
     }
 
+    .hero::before {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(16, 48, 60, 0.38) 0%,
+                rgba(16, 48, 60, 0.28) 18%,
+                rgba(16, 48, 60, 0.34) 38%,
+                rgba(16, 48, 60, 0.5) 58%,
+                rgba(16, 48, 60, 0.72) 80%,
+                rgba(16, 48, 60, 0.88) 100%
+            );
+    }
+
+    .hero::after {
+        right: auto;
+        left: 50%;
+        top: -8%;
+        width: 26rem;
+        height: 26rem;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(0, 180, 216, 0.14) 0%, rgba(0, 140, 200, 0.05) 42%, transparent 70%);
+        filter: blur(34px);
+    }
+
     .hero-grid {
         width: min(100% - 30px, 420px);
+    }
+
+    .hero-background-slideshow::after {
+        left: 50%;
+        bottom: -18%;
+        width: 28rem;
+        height: 28rem;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(0, 180, 216, 0.16) 0%, rgba(0, 180, 216, 0) 68%);
+        filter: blur(52px);
+    }
+
+    .hero-bg-slide img {
+        object-position: center 24%;
+        filter: saturate(0.76) contrast(1.02) brightness(0.54);
     }
 
     .hero-copy {
@@ -3444,26 +3462,26 @@ strong {
     }
 
     .hero-info-list {
-        gap: 10px;
-        width: min(100%, 360px);
-        margin: 18px auto 0;
+        gap: 8px;
+        width: min(100%, 292px);
+        margin: 16px auto 0;
     }
 
     .hero-info-item {
-        gap: 12px;
-        padding: 14px 14px 13px;
-        border-radius: 18px;
+        gap: 10px;
+        padding: 12px 12px 11px;
+        border-radius: 16px;
         background: rgba(8, 24, 31, 0.34);
     }
 
     .hero-info-copy strong {
-        font-size: 0.92rem;
-        line-height: 1.28;
+        font-size: 0.84rem;
+        line-height: 1.24;
     }
 
     .hero-info-copy span {
-        font-size: 0.76rem;
-        line-height: 1.4;
+        font-size: 0.7rem;
+        line-height: 1.34;
     }
 
     .hero-proof-list,
@@ -3476,7 +3494,7 @@ strong {
     .hero-proof-list {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        width: min(100%, 360px);
+        width: min(100%, 292px);
         gap: 8px;
         margin: 16px auto 0;
     }
@@ -3582,7 +3600,6 @@ strong {
     }
 
     .curriculum-content p {
-        padding-bottom: 18px;
         font-size: 0.95rem;
         line-height: 1.55;
     }
@@ -3593,8 +3610,7 @@ strong {
     }
 
     .curriculum-result {
-        padding: 16px 16px 20px;
-        border-radius: 18px;
+        padding: 4px 0 8px;
     }
 
     .faculty-shell {
@@ -3654,18 +3670,23 @@ strong {
     }
 
     .testimonials-shell {
-        gap: 24px;
-        padding-top: 118px;
+        gap: 14px;
+        padding-top: 24px;
+    }
+
+    .testimonials-header {
+        margin: 0;
     }
 
     .testimonials-title {
+        margin: 0;
         font-size: clamp(2.15rem, 9vw, 2.9rem);
         line-height: 1.06;
     }
 
     .testimonials-divider {
-        margin-bottom: -110px;
-        padding: 28px 0 82px;
+        margin-bottom: -54px;
+        padding: 12px 0 18px;
         background: linear-gradient(
             180deg,
             #f3f7f8 0 36%,
@@ -3680,7 +3701,7 @@ strong {
     }
 
     .testimonials-proof {
-        padding: 26px 22px 28px;
+        padding: 20px 22px 18px;
         border-radius: 22px 22px 28px 28px;
     }
 
@@ -3882,23 +3903,18 @@ strong {
     .whatsapp-float {
         right: 14px;
         bottom: 14px;
-        min-height: 56px;
-        padding: 10px 14px 10px 10px;
-        gap: 10px;
+        width: 52px;
+        height: 52px;
     }
 
     .whatsapp-float-icon {
-        width: 34px;
-        height: 34px;
+        width: 52px;
+        height: 52px;
     }
 
-    .whatsapp-float-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .whatsapp-float-label {
-        font-size: 0.82rem;
+    .whatsapp-float-icon img {
+        width: 52px;
+        height: 52px;
     }
 }
 

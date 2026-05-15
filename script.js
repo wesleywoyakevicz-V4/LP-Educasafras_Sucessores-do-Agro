@@ -104,7 +104,6 @@ function applyCurriculumOverrides() {
                     <span class="curriculum-icon" aria-hidden="true">+</span>
                 </button>
                 <div class="curriculum-content">
-                    <p class="curriculum-hook">Antes de liderar o neg&oacute;cio, voc&ecirc; precisa entender o seu lugar dentro dele. Quem voc&ecirc; &eacute; na fam&iacute;lia empres&aacute;ria define como voc&ecirc; vai conduzir a transi&ccedil;&atilde;o.</p>
                     <ul class="curriculum-topics">
                         <li>Estrutura e evolu&ccedil;&atilde;o da fam&iacute;lia empres&aacute;ria</li>
                         <li>Ciclos geracionais e suas complexidades</li>
@@ -122,7 +121,6 @@ function applyCurriculumOverrides() {
                     <span class="curriculum-icon" aria-hidden="true">+</span>
                 </button>
                 <div class="curriculum-content">
-                    <p class="curriculum-hook">O patrim&ocirc;nio que sua fam&iacute;lia levou d&eacute;cadas para construir pode ser desfeito em uma &uacute;nica decis&atilde;o mal planejada. Estruturar juridicamente n&atilde;o &eacute; op&ccedil;&atilde;o, &eacute; prote&ccedil;&atilde;o.</p>
                     <ul class="curriculum-topics">
                         <li>Empresa rural familiar: caracter&iacute;sticas, vantagens e desafios</li>
                         <li>Sistema dos 3 c&iacute;rculos: Fam&iacute;lia, Neg&oacute;cio e Patrim&ocirc;nio</li>
@@ -141,7 +139,6 @@ function applyCurriculumOverrides() {
                     <span class="curriculum-icon" aria-hidden="true">+</span>
                 </button>
                 <div class="curriculum-content">
-                    <p class="curriculum-hook">O sistema tribut&aacute;rio brasileiro est&aacute; mudando. Quem entender primeiro as novas regras vai proteger margem, evitar surpresas e sair na frente na transi&ccedil;&atilde;o.</p>
                     <ul class="curriculum-topics">
                         <li>O novo modelo tribut&aacute;rio: IBS, CBS e o fim do sistema atual</li>
                         <li>Impactos diretos da reforma para o produtor rural PF e PJ</li>
@@ -161,7 +158,6 @@ function applyCurriculumOverrides() {
                     <span class="curriculum-icon" aria-hidden="true">+</span>
                 </button>
                 <div class="curriculum-content">
-                    <p class="curriculum-hook">Faturar alto e n&atilde;o saber onde o dinheiro vai &eacute; o erro mais comum do agro. E o mais caro. Decis&atilde;o sem dado &eacute; aposta.</p>
                     <ul class="curriculum-topics">
                         <li>Diferen&ccedil;a entre resultado econ&ocirc;mico e financeiro</li>
                         <li>Classifica&ccedil;&atilde;o e an&aacute;lise de custos e despesas</li>
@@ -180,7 +176,6 @@ function applyCurriculumOverrides() {
                     <span class="curriculum-icon" aria-hidden="true">+</span>
                 </button>
                 <div class="curriculum-content">
-                    <p class="curriculum-hook">Sem regras claras, at&eacute; a fam&iacute;lia mais unida se divide quando o assunto &eacute; dinheiro e poder. Governan&ccedil;a n&atilde;o &eacute; burocracia, &eacute; o que mant&eacute;m o neg&oacute;cio de p&eacute; entre gera&ccedil;&otilde;es.</p>
                     <ul class="curriculum-topics">
                         <li>Governan&ccedil;a: teoria, pr&aacute;tica e aplica&ccedil;&atilde;o no agro</li>
                         <li>Governan&ccedil;a Corporativa e Governan&ccedil;a Familiar</li>
@@ -776,7 +771,19 @@ function initHeroSlideshow() {
         return;
     }
 
-    const slides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
+    const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+    const allSlides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
+    const slides = allSlides.filter((slide) => !(isMobileViewport && slide.dataset.hideMobile === 'true'));
+
+    if (isMobileViewport) {
+        allSlides.forEach((slide) => {
+            if (slide.dataset.hideMobile === 'true') {
+                slide.classList.remove('is-active');
+                slide.hidden = true;
+            }
+        });
+    }
+
     if (!slides.length) {
         return;
     }
