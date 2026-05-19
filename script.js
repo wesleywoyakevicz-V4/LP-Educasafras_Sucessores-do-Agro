@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initTestimonialsCarousel();
 });
 
+const HERO_SLIDE_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
 function applyFAQOverrides() {
     const faqHeader = document.querySelector('.faq .section-header');
     const faqList = document.querySelector('.faq-list');
@@ -208,7 +210,7 @@ function repositionPointsRescueCard() {
 
     if (pointsCopy) {
         pointsCopy.innerHTML = `
-            <h3>Dispon&iacute;vel para Resgate de Pontos</h3>
+            <h2>Dispon&iacute;vel para Resgate de Pontos</h2>
             <p>Voc&ecirc; pode utilizar seus pontos para participar da imers&atilde;o. Fale com um consultor para saber as condi&ccedil;&otilde;es e plataformas aceitas.</p>
         `;
     }
@@ -774,6 +776,9 @@ function initHeroSlideshow() {
     const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
     const allSlides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
     const slides = allSlides.filter((slide) => !(isMobileViewport && slide.dataset.hideMobile === 'true'));
+    const scheduleHydration = window.requestIdleCallback
+        ? (callback, timeout = 1200) => window.requestIdleCallback(callback, { timeout })
+        : (callback) => window.setTimeout(callback, 220);
 
     if (isMobileViewport) {
         allSlides.forEach((slide) => {
@@ -790,14 +795,64 @@ function initHeroSlideshow() {
 
     let activeIndex = 0;
 
+    const hydrateSlide = (slide) => {
+        if (!slide || slide.dataset.loaded === 'true') {
+            return;
+        }
+
+        const picture = slide.querySelector('picture');
+        const image = picture ? picture.querySelector('img') : null;
+        if (!picture || !image) {
+            return;
+        }
+
+        const [mobileWebpSource, desktopWebpSource, mobileJpgSource] = picture.querySelectorAll('source');
+        if (mobileWebpSource) {
+            mobileWebpSource.srcset = picture.dataset.mobileWebp || '';
+        }
+        if (desktopWebpSource) {
+            desktopWebpSource.srcset = picture.dataset.desktopWebp || '';
+        }
+        if (mobileJpgSource) {
+            mobileJpgSource.srcset = picture.dataset.mobileJpg || '';
+        }
+
+        image.src = picture.dataset.desktopJpg || HERO_SLIDE_PLACEHOLDER;
+        image.loading = 'eager';
+        slide.dataset.loaded = 'true';
+        slide.classList.add('is-ready');
+    };
+
+    const queueHydration = (slide, timeout) => {
+        if (!slide || slide.dataset.loaded === 'true') {
+            return;
+        }
+
+        scheduleHydration(() => hydrateSlide(slide), timeout);
+    };
+
     const setActiveSlide = (index) => {
         activeIndex = (index + slides.length) % slides.length;
+        hydrateSlide(slides[activeIndex]);
         slides.forEach((slide, slideIndex) => {
             slide.classList.toggle('is-active', slideIndex === activeIndex);
         });
+
+        queueHydration(slides[(activeIndex + 1) % slides.length], 900);
     };
 
+    slides.forEach((slide) => {
+        if (slide.dataset.loaded === 'true') {
+            slide.classList.add('is-ready');
+            const image = slide.querySelector('img');
+            if (image && image.src === HERO_SLIDE_PLACEHOLDER) {
+                image.removeAttribute('src');
+            }
+        }
+    });
+
     setActiveSlide(0);
+    queueHydration(slides[1], 600);
     window.setInterval(() => {
         setActiveSlide(activeIndex + 1);
     }, 4200);

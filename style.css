@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
-
 :root {
     --bg: #ffffff;
     --bg-elevated: rgba(255, 255, 255, 0.9);
@@ -23,7 +21,7 @@
     --radius-sm: 14px;
     --container: 1200px;
     --section-padding: 112px;
-    --topbar-safe-space: 120px;
+    --topbar-safe-space: 48px;
 }
 
 * {
@@ -357,8 +355,8 @@ strong {
     padding: 8px 14px;
     border-radius: 999px;
     border: 1px solid rgba(253, 177, 5, 0.46);
-    background: rgba(253, 177, 5, 0.14);
-    color: #ffe29a;
+    background: rgba(10, 29, 36, 0.38);
+    color: #fff1bd;
     font-size: 0.77rem;
     font-weight: 800;
     box-shadow:
@@ -713,8 +711,8 @@ strong {
     inset: 0;
     z-index: 1;
     background:
-        linear-gradient(90deg, rgba(16, 48, 60, 0.98) 0%, rgba(16, 48, 60, 0.94) 22%, rgba(16, 48, 60, 0.82) 38%, rgba(16, 48, 60, 0.58) 54%, rgba(16, 48, 60, 0.28) 72%, rgba(16, 48, 60, 0) 88%),
-        linear-gradient(180deg, rgba(16, 48, 60, 0.24) 0%, rgba(16, 48, 60, 0) 30%, rgba(16, 48, 60, 0.28) 100%);
+        linear-gradient(90deg, rgba(16, 48, 60, 0.99) 0%, rgba(16, 48, 60, 0.96) 24%, rgba(16, 48, 60, 0.88) 40%, rgba(16, 48, 60, 0.7) 56%, rgba(16, 48, 60, 0.38) 76%, rgba(16, 48, 60, 0.08) 92%),
+        linear-gradient(180deg, rgba(16, 48, 60, 0.34) 0%, rgba(16, 48, 60, 0.08) 30%, rgba(16, 48, 60, 0.34) 100%);
     background-size: auto, auto;
     opacity: 1;
 }
@@ -735,6 +733,9 @@ strong {
     z-index: 1;
     width: 100%;
     max-width: none;
+    min-height: clamp(620px, calc(100svh - var(--topbar-safe-space) - 144px), 760px);
+    display: flex;
+    align-items: center;
 }
 
 .hero-copy {
@@ -771,7 +772,7 @@ strong {
     max-width: 42rem;
     font-size: 1.02rem;
     line-height: 1.62;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.88);
 }
 
 .hero-copy p strong {
@@ -839,7 +840,7 @@ strong {
 }
 
 .hero-info-copy span {
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.82);
     font-size: 0.82rem;
     line-height: 1.45;
 }
@@ -871,7 +872,7 @@ strong {
 }
 
 .hero-proof-item span {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.82);
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -916,6 +917,7 @@ strong {
     opacity: 0;
     transform: scale(1.03);
     transition: opacity 1s ease, transform 6s ease;
+    will-change: opacity, transform;
 }
 
 .hero-bg-slide.is-active {
@@ -927,6 +929,7 @@ strong {
     display: block;
     width: 100%;
     height: 100%;
+    background: #10303c;
 }
 
 .hero-bg-slide img {
@@ -2587,14 +2590,26 @@ strong {
 }
 
 .price-card.disabled {
-    opacity: 0.54;
-    filter: grayscale(0.18);
+    opacity: 1;
+    filter: none;
+    background: rgba(23, 69, 85, 0.05);
+    border-color: rgba(23, 69, 85, 0.12);
 }
 
 .price-card.disabled .btn {
     background: rgba(255, 255, 255, 0.86);
     border-color: rgba(148, 163, 184, 0.16);
-    color: var(--muted);
+    color: #4f6670;
+}
+
+.price-card.disabled h4 {
+    color: #4f6670;
+}
+
+.price-card.disabled .price,
+.price-card.disabled p,
+.price-card.disabled li {
+    color: #4f6670;
 }
 
 .badge {
@@ -2691,7 +2706,7 @@ strong {
     box-shadow: 0 24px 50px rgba(23, 69, 85, 0.06);
 }
 
-.points-rescue-copy h3 {
+.points-rescue-copy h2 {
     color: #082f45;
     font-size: clamp(1.45rem, 2.6vw, 2rem);
     letter-spacing: -0.04em;
@@ -3394,6 +3409,7 @@ strong {
 
     .hero-grid {
         width: min(100% - 30px, 420px);
+        min-height: auto;
     }
 
     .hero-background-slideshow::after {
