@@ -743,13 +743,7 @@ function initNavbarState() {
 
     updateState();
     updateTopbarSafeSpace();
-    window.addEventListener('resize', updateTopbarSafeSpace, { passive: true });
     window.addEventListener('scroll', updateState, { passive: true });
-    window.addEventListener('load', updateTopbarSafeSpace, { once: true });
-
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(updateTopbarSafeSpace).catch(() => {});
-    }
 
     if (!hero) {
         return;

@@ -423,10 +423,8 @@ strong {
     border: 1px solid transparent;
     backdrop-filter: blur(0);
     box-shadow: none;
-    transform: translateY(-14px);
-    opacity: 0;
-    animation: navDrop 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    animation-delay: 0.08s;
+    transform: translateY(0);
+    opacity: 1;
     transition:
         background 0.24s ease,
         border-color 0.24s ease,
@@ -694,7 +692,7 @@ strong {
     min-height: 100svh;
     display: flex;
     align-items: center;
-    padding: calc(var(--topbar-safe-space) + 56px) 0 88px;
+    padding: 136px 0 88px;
     position: relative;
     overflow: hidden;
     background: #10303c;
@@ -3054,24 +3052,12 @@ strong {
     will-change: transform, opacity, filter;
 }
 
-.hero-copy > * {
-    opacity: 0;
-    transform: translateY(18px);
-    animation: heroRise 0.9s ease forwards;
-}
-
-.hero-copy > *:nth-child(1) { animation-delay: 0.08s; }
-.hero-copy > *:nth-child(2) { animation-delay: 0.18s; }
-.hero-copy > *:nth-child(3) { animation-delay: 0.28s; }
-.hero-copy > *:nth-child(4) { animation-delay: 0.38s; }
-.hero-copy > *:nth-child(5) { animation-delay: 0.48s; }
-.hero-copy > *:nth-child(6) { animation-delay: 0.58s; }
-
+.hero-copy > *,
 .hero-visual {
-    opacity: 0;
-    transform: translateY(20px) scale(0.985);
-    animation: heroRise 1s ease forwards;
-    animation-delay: 0.25s;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
 }
 
 @keyframes heroRise {
@@ -3380,7 +3366,7 @@ strong {
     .hero {
         min-height: auto;
         align-items: flex-start;
-        padding: calc(var(--topbar-safe-space) + 36px) 0 42px;
+        padding: 112px 0 42px;
     }
 
     .hero::before {
