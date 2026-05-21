@@ -541,6 +541,120 @@ function initMobileMenu() {
     }
 }
 
+const LEAD_WEBHOOK_URL = 'https://automation.opscap.collieassociados.com/webhook/f2c1fa7f-4a54-47c1-b451-46e77f061c0c';
+const LEAD_SOURCE_STORAGE_KEY = 'educasafras:sucessores:lead-source';
+
+function getViewportLeadLabel() {
+    return window.matchMedia('(max-width: 767px)').matches ? 'Mobile' : 'Desktop';
+}
+
+function getNormalizedLeadSource(rawSource) {
+    const fallbackSource = 'Sucessores do Agro - Formulario';
+    const source = (rawSource || fallbackSource).trim();
+    const viewportLabel = getViewportLeadLabel();
+
+    if (source.endsWith(` - ${viewportLabel}`)) {
+        return source;
+    }
+
+    return `${source} - ${viewportLabel}`;
+}
+
+function inferLeadSourceFromElement(element) {
+    if (!element) {
+        return '';
+    }
+
+    const href = element.getAttribute('href') || '';
+    const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
+
+    if (element.classList.contains('testimonials-cta-btn')) {
+        return 'Sucessores do Agro - Depoimentos';
+    }
+
+    if (element.closest('.hero')) {
+        return 'Sucessores do Agro - Hero';
+    }
+
+    if (element.closest('.price-card.active')) {
+        return 'Sucessores do Agro - Oferta Lote 02';
+    }
+
+    if (element.closest('.topbar-shell')) {
+        return 'Sucessores do Agro - Topbar';
+    }
+
+    if (href === '#lead-form-section' || href === '#inscricao') {
+        return text ? `Sucessores do Agro - ${text}` : 'Sucessores do Agro - CTA';
+    }
+
+    return '';
+}
+
+function persistLeadSource(source) {
+    const normalizedSource = getNormalizedLeadSource(source);
+    window.sessionStorage.setItem(LEAD_SOURCE_STORAGE_KEY, normalizedSource);
+    return normalizedSource;
+}
+
+function getPersistedLeadSource() {
+    return window.sessionStorage.getItem(LEAD_SOURCE_STORAGE_KEY) || '';
+}
+
+function initLeadSourceTracking() {
+    document.querySelectorAll('a[href="#lead-form-section"], a[href="#inscricao"]').forEach((anchor) => {
+        anchor.addEventListener('click', () => {
+            const inferredSource = inferLeadSourceFromElement(anchor);
+            if (inferredSource) {
+                persistLeadSource(inferredSource);
+            }
+        });
+    });
+}
+
+function getLeadQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const readParam = (...keys) => {
+        for (const key of keys) {
+            const value = params.get(key);
+            if (value) {
+                return value;
+            }
+        }
+
+        return '';
+    };
+
+    return {
+        utm_source: readParam('utm_source'),
+        utm_medium: readParam('utm_medium'),
+        utm_campaign: readParam('utm_campaign'),
+        utm_content: readParam('utm_content'),
+        utm_term: readParam('utm_term'),
+        adcampaign: readParam('adcampaign', 'campaignid', 'campaign_id'),
+        groupid: readParam('groupid', 'adgroupid', 'group_id'),
+        adid: readParam('adid', 'creative', 'creative_id'),
+        fbclid: readParam('fbclid'),
+        gclid: readParam('gclid')
+    };
+}
+
+function getLeadSubmittedAt() {
+    return new Intl.DateTimeFormat('pt-BR', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+        timeZone: 'America/Sao_Paulo'
+    }).format(new Date());
+}
+
+function pushLeadDataLayerEvent(eventName, eventData = {}) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: eventName,
+        ...eventData
+    });
+}
+
 function initLeadForm() {
     const section = document.querySelector('.lead-section');
     if (!section) {
@@ -551,14 +665,46 @@ function initLeadForm() {
     const successState = section.querySelector('.lead-modal-success');
     const firstInput = section.querySelector('input, select, textarea');
     const resetTrigger = section.querySelector('[data-reset-lead-form]');
+    const submitButton = section.querySelector('.lead-modal-submit');
 
     if (!form) {
         return;
     }
 
+    initLeadSourceTracking();
+
+    let feedbackMessage = section.querySelector('[data-lead-form-feedback]');
+    if (!feedbackMessage) {
+        feedbackMessage = document.createElement('p');
+        feedbackMessage.dataset.leadFormFeedback = 'true';
+        feedbackMessage.hidden = true;
+        feedbackMessage.style.marginTop = '16px';
+        feedbackMessage.style.color = '#b42318';
+        form.insertAdjacentElement('afterend', feedbackMessage);
+    }
+
+    const setFeedbackMessage = (message = '') => {
+        feedbackMessage.textContent = message;
+        feedbackMessage.hidden = !message;
+    };
+
+    const setSubmittingState = (isSubmitting) => {
+        if (!submitButton) {
+            return;
+        }
+
+        submitButton.disabled = isSubmitting;
+        submitButton.setAttribute('aria-busy', String(isSubmitting));
+        submitButton.innerHTML = isSubmitting
+            ? 'Enviando...'
+            : 'Receber mais informaÃ§Ãµes <span>â†’</span>';
+    };
+
     const resetForm = ({ shouldFocus = false } = {}) => {
         form.hidden = false;
         form.reset();
+        setFeedbackMessage('');
+        setSubmittingState(false);
 
         if (successState) {
             successState.hidden = true;
@@ -569,13 +715,67 @@ function initLeadForm() {
         }
     };
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        form.hidden = true;
 
-        if (successState) {
-            successState.hidden = false;
-            successState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        const formData = new FormData(form);
+        const source = getPersistedLeadSource() || getNormalizedLeadSource('Sucessores do Agro - Formulario');
+        const payload = {
+            nome: String(formData.get('nome') || '').trim(),
+            whatsapp: String(formData.get('whatsapp') || '').trim(),
+            email: String(formData.get('email') || '').trim(),
+            formacao: 'sucessores',
+            envolvimento: String(formData.get('envolvimento') || '').trim(),
+            mensagem: String(formData.get('desafio') || '').trim(),
+            origem: source,
+            data_cadastro: getLeadSubmittedAt(),
+            canal: window.location.hostname,
+            ...getLeadQueryParams()
+        };
+
+        setFeedbackMessage('');
+        setSubmittingState(true);
+        pushLeadDataLayerEvent('lead_form_submit_attempt', {
+            lead_source: payload.origem,
+            lead_formacao: payload.formacao
+        });
+
+        try {
+            const response = await fetch(LEAD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Webhook returned ${response.status}`);
+            }
+
+            form.hidden = true;
+
+            if (successState) {
+                successState.hidden = false;
+                successState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            pushLeadDataLayerEvent('lead_form_submit_success', {
+                lead_source: payload.origem,
+                lead_formacao: payload.formacao
+            });
+        } catch (error) {
+            setFeedbackMessage('NÃ£o foi possÃ­vel enviar seus dados agora. Tente novamente em instantes.');
+            pushLeadDataLayerEvent('lead_form_submit_error', {
+                lead_source: payload.origem,
+                error_message: error instanceof Error ? error.message : 'unknown_error'
+            });
+        } finally {
+            setSubmittingState(false);
         }
     });
 
