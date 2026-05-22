@@ -647,6 +647,151 @@ function getLeadSubmittedAt() {
     }).format(new Date());
 }
 
+function getNormalizedWhatsappDigits(rawValue) {
+    const digits = String(rawValue || '').replace(/\D/g, '');
+
+    if (digits.length === 13 && digits.startsWith('55')) {
+        return digits.slice(2);
+    }
+
+    return digits;
+}
+
+function isRepeatedDigits(value) {
+    return /^(\d)\1+$/.test(value);
+}
+
+function isObviousNumericSequence(value) {
+    if (value.length < 8) {
+        return false;
+    }
+
+    let ascending = true;
+    let descending = true;
+
+    for (let index = 1; index < value.length; index += 1) {
+        const previous = Number(value[index - 1]);
+        const current = Number(value[index]);
+
+        if (current !== (previous + 1) % 10) {
+            ascending = false;
+        }
+
+        if (current !== (previous + 9) % 10) {
+            descending = false;
+        }
+    }
+
+    return ascending || descending;
+}
+
+function validateWhatsapp(rawValue) {
+    const digits = getNormalizedWhatsappDigits(rawValue);
+
+    if (!digits) {
+        return 'Informe um WhatsApp.';
+    }
+
+    if (digits.length !== 11) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    const subscriberNumber = digits.slice(2);
+
+    if (!subscriberNumber.startsWith('9')) {
+        return 'Informe um número de celular/WhatsApp válido.';
+    }
+
+    if (isRepeatedDigits(subscriberNumber) || isRepeatedDigits(digits)) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    if (isObviousNumericSequence(subscriberNumber) || isObviousNumericSequence(digits)) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    return '';
+}
+
+function validateEmailAddress(rawValue) {
+    const email = String(rawValue || '').trim();
+
+    if (!email) {
+        return 'Informe um e-mail.';
+    }
+
+    if (email.length > 254 || /\s/.test(email)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    const parts = email.split('@');
+    if (parts.length !== 2) {
+        return 'Informe um e-mail válido.';
+    }
+
+    const [localPart, domain] = parts;
+    const domainLabels = domain.toLowerCase().split('.');
+    const primaryDomainLabel = domainLabels[0] || '';
+    const normalizedLocalPart = localPart.toLowerCase();
+    const placeholderTokens = new Set([
+        'teste',
+        'test',
+        'email',
+        'exemplo',
+        'example'
+    ]);
+
+    if (!localPart || !domain || localPart.length > 64) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!domain.includes('.')) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (
+        localPart.startsWith('.') ||
+        localPart.endsWith('.') ||
+        localPart.includes('..') ||
+        domain.startsWith('.') ||
+        domain.endsWith('.') ||
+        domain.includes('..')
+    ) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!/^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(localPart)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!/^(?=.{1,253}$)(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}$/i.test(domain)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (
+        normalizedLocalPart === primaryDomainLabel ||
+        (placeholderTokens.has(normalizedLocalPart) && placeholderTokens.has(primaryDomainLabel))
+    ) {
+        return 'Informe um e-mail válido.';
+    }
+
+    return '';
+}
+
+function validateLeadFields(payload) {
+    const whatsappError = validateWhatsapp(payload.whatsapp);
+    if (whatsappError) {
+        return whatsappError;
+    }
+
+    const emailError = validateEmailAddress(payload.email);
+    if (emailError) {
+        return emailError;
+    }
+
+    return '';
+}
+
 function pushLeadDataLayerEvent(eventName, eventData = {}) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -666,6 +811,8 @@ function initLeadForm() {
     const firstInput = section.querySelector('input, select, textarea');
     const resetTrigger = section.querySelector('[data-reset-lead-form]');
     const submitButton = section.querySelector('.lead-modal-submit');
+    const whatsappInput = form?.querySelector('input[name="whatsapp"]');
+    const emailInput = form?.querySelector('input[name="email"]');
 
     if (!form) {
         return;
@@ -688,12 +835,91 @@ function initLeadForm() {
         feedbackMessage.hidden = !message;
     };
 
+    const getFieldErrorNode = (input) => {
+        if (!input) {
+            return null;
+        }
+
+        const field = input.closest('.lead-field');
+        if (!field) {
+            return null;
+        }
+
+        let errorNode = field.querySelector('[data-field-error]');
+        if (!errorNode) {
+            errorNode = document.createElement('span');
+            errorNode.dataset.fieldError = 'true';
+            errorNode.className = 'lead-field-error';
+            errorNode.hidden = true;
+            field.appendChild(errorNode);
+        }
+
+        return errorNode;
+    };
+
+    const setFieldError = (input, message = '', { showMessage = true } = {}) => {
+        if (!input) {
+            return;
+        }
+
+        const field = input.closest('.lead-field');
+        const errorNode = getFieldErrorNode(input);
+
+        input.setCustomValidity(message);
+
+        if (field) {
+            field.classList.toggle('has-error', Boolean(message) && showMessage);
+        }
+
+        if (errorNode) {
+            errorNode.textContent = showMessage ? message : '';
+            errorNode.hidden = !message || !showMessage;
+        }
+    };
+
+    let hasSubmitted = false;
+
+    const syncFieldValidation = ({ showMessages = false } = {}) => {
+        if (whatsappInput) {
+            setFieldError(whatsappInput, validateWhatsapp(whatsappInput.value), { showMessage: showMessages });
+        }
+
+        if (emailInput) {
+            setFieldError(emailInput, validateEmailAddress(emailInput.value), { showMessage: showMessages });
+        }
+    };
+
+    const isFormSubmittable = () => {
+        const requiredFields = Array.from(form.querySelectorAll('[required]'));
+        const hasEmptyRequiredField = requiredFields.some((field) => !String(field.value || '').trim());
+
+        if (hasEmptyRequiredField) {
+            return false;
+        }
+
+        const whatsappError = whatsappInput ? validateWhatsapp(whatsappInput.value) : '';
+        const emailError = emailInput ? validateEmailAddress(emailInput.value) : '';
+
+        return !whatsappError && !emailError;
+    };
+
+    const updateSubmitButtonState = () => {
+        if (!submitButton) {
+            return;
+        }
+
+        syncFieldValidation({ showMessages: false });
+        submitButton.disabled = !isFormSubmittable();
+        submitButton.setAttribute('aria-disabled', String(submitButton.disabled));
+    };
+
     const setSubmittingState = (isSubmitting) => {
         if (!submitButton) {
             return;
         }
 
-        submitButton.disabled = isSubmitting;
+        submitButton.disabled = isSubmitting || !isFormSubmittable();
+        submitButton.setAttribute('aria-disabled', String(submitButton.disabled));
         submitButton.setAttribute('aria-busy', String(isSubmitting));
         submitButton.innerHTML = isSubmitting
             ? 'Enviando...'
@@ -703,8 +929,12 @@ function initLeadForm() {
     const resetForm = ({ shouldFocus = false } = {}) => {
         form.hidden = false;
         form.reset();
+        hasSubmitted = false;
+        setFieldError(whatsappInput, '', { showMessage: false });
+        setFieldError(emailInput, '', { showMessage: false });
         setFeedbackMessage('');
         setSubmittingState(false);
+        updateSubmitButtonState();
 
         if (successState) {
             successState.hidden = true;
@@ -715,8 +945,43 @@ function initLeadForm() {
         }
     };
 
+    whatsappInput?.addEventListener('input', () => {
+        setFieldError(whatsappInput, '', { showMessage: false });
+        updateSubmitButtonState();
+    });
+
+    whatsappInput?.addEventListener('blur', () => {
+        setFieldError(whatsappInput, validateWhatsapp(whatsappInput.value), { showMessage: true });
+        updateSubmitButtonState();
+    });
+
+    emailInput?.addEventListener('input', () => {
+        setFieldError(emailInput, '', { showMessage: false });
+        updateSubmitButtonState();
+    });
+
+    emailInput?.addEventListener('blur', () => {
+        setFieldError(emailInput, validateEmailAddress(emailInput.value), { showMessage: true });
+        updateSubmitButtonState();
+    });
+
+    form.querySelectorAll('input, select, textarea').forEach((field) => {
+        if (field === whatsappInput || field === emailInput) {
+            return;
+        }
+
+        field.addEventListener('input', updateSubmitButtonState);
+        field.addEventListener('change', updateSubmitButtonState);
+        field.addEventListener('blur', updateSubmitButtonState);
+    });
+
+    updateSubmitButtonState();
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
+        hasSubmitted = true;
+
+        syncFieldValidation({ showMessages: true });
 
         if (!form.reportValidity()) {
             return;
@@ -736,6 +1001,14 @@ function initLeadForm() {
             canal: window.location.hostname,
             ...getLeadQueryParams()
         };
+
+        const fieldValidationError = validateLeadFields(payload);
+        if (fieldValidationError) {
+            setFeedbackMessage(fieldValidationError);
+            syncFieldValidation({ showMessages: true });
+            form.reportValidity();
+            return;
+        }
 
         setFeedbackMessage('');
         setSubmittingState(true);
@@ -776,6 +1049,7 @@ function initLeadForm() {
             });
         } finally {
             setSubmittingState(false);
+            updateSubmitButtonState();
         }
     });
 
