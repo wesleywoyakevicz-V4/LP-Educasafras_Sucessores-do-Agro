@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    initContentOverrides();
     initFAQ();
     initCurriculumAccordion();
     initFacultyCards();
@@ -8,7 +9,347 @@ document.addEventListener('DOMContentLoaded', () => {
     initRevealAnimations();
     initNavbarState();
     initHeroSlideshow();
+    initTestimonialsCarousel();
 });
+
+const HERO_SLIDE_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
+function applyFAQOverrides() {
+    const faqHeader = document.querySelector('.faq .section-header');
+    const faqList = document.querySelector('.faq-list');
+
+    if (faqHeader) {
+        faqHeader.innerHTML = `
+            <span class="eyebrow">Perguntas frequentes</span>
+            <h2>Tire suas d&uacute;vidas antes de garantir sua vaga.</h2>
+            <p>Tire suas d&uacute;vidas sobre a imers&atilde;o, formas de pagamento e como garantir sua vaga.</p>
+        `;
+    }
+
+    if (faqList) {
+        faqList.innerHTML = `
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Preciso ter experi&ecirc;ncia em gest&atilde;o para participar?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>N&atilde;o. O programa foi desenhado para diferentes n&iacute;veis de maturidade. Temos alunos que est&atilde;o come&ccedil;ando a se envolver no neg&oacute;cio e outros que j&aacute; lideram opera&ccedil;&otilde;es. O conte&uacute;do &eacute; aplic&aacute;vel para todos.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Qual &eacute; a dura&ccedil;&atilde;o e formato da imers&atilde;o?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>S&atilde;o 5 m&oacute;dulos presenciais realizados em Goi&acirc;nia/GO, com conte&uacute;do intensivo que combina aulas, cases pr&aacute;ticos, din&acirc;micas em grupo e networking com sucessores de todo o Brasil.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>O curso oferece certificado?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim. Ao concluir a imers&atilde;o, voc&ecirc; recebe um certificado de conclus&atilde;o do programa Sucessores do Agro pela Educasafras.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Quais s&atilde;o as formas de pagamento?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Aceitamos pagamento &agrave; vista ou parcelado. Para conhecer as condi&ccedil;&otilde;es de parcelamento dispon&iacute;veis, entre em contato com nosso time atrav&eacute;s do formul&aacute;rio ou WhatsApp.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Como funciona a pol&iacute;tica de cancelamento?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>Oferecemos condi&ccedil;&otilde;es flex&iacute;veis de cancelamento. Entre em contato com nosso time para conhecer os prazos e condi&ccedil;&otilde;es detalhadas.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    <span>Onde ser&aacute; realizada a imers&atilde;o e onde posso me hospedar?</span>
+                    <strong>+</strong>
+                </button>
+                <div class="faq-answer">
+                    <p>A imers&atilde;o acontece na sede da Safras &amp; Cifras em Goi&acirc;nia/GO. Os participantes contam com parcerias exclusivas em hot&eacute;is pr&oacute;ximos ao local, com tarifas reduzidas. Ap&oacute;s a inscri&ccedil;&atilde;o, voc&ecirc; receber&aacute; os detalhes dos hot&eacute;is parceiros e orienta&ccedil;&otilde;es para reserva com desconto.</p>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function applyCurriculumOverrides() {
+    const curriculumHeader = document.querySelector('.curriculum-intro .section-header');
+    const curriculumList = document.querySelector('.curriculum-list');
+
+    if (curriculumHeader) {
+        curriculumHeader.innerHTML = `
+            <h2>O que voc&ecirc; vai dominar</h2>
+            <p>De fam&iacute;lia a empresa. 5 m&oacute;dulos que cobrem sucess&atilde;o, patrim&ocirc;nio, tributos, finan&ccedil;as e governan&ccedil;a.</p>
+        `;
+    }
+
+    if (curriculumList) {
+        curriculumList.innerHTML = `
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">01</span>
+                    <span class="curriculum-title">A Nova Gera&ccedil;&atilde;o do Agro e o Papel do Sucessor</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <ul class="curriculum-topics">
+                        <li>Estrutura e evolu&ccedil;&atilde;o da fam&iacute;lia empres&aacute;ria</li>
+                        <li>Ciclos geracionais e suas complexidades</li>
+                        <li>Vantagens e desafios das empresas familiares</li>
+                        <li>Desenvolvimento de herdeiros e sucessores</li>
+                        <li>Gest&atilde;o da continuidade e sustentabilidade do legado familiar</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; desenvolve leitura sist&ecirc;mica dos pap&eacute;is familiares e empresariais, autoconhecimento socioemocional e capacidade de liderar a transi&ccedil;&atilde;o entre gera&ccedil;&otilde;es.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">02</span>
+                    <span class="curriculum-title">Holding Rural: Gest&atilde;o, Sociedade e Sucess&atilde;o</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <ul class="curriculum-topics">
+                        <li>Empresa rural familiar: caracter&iacute;sticas, vantagens e desafios</li>
+                        <li>Sistema dos 3 c&iacute;rculos: Fam&iacute;lia, Neg&oacute;cio e Patrim&ocirc;nio</li>
+                        <li>Planejamento sucess&oacute;rio e riscos patrimoniais</li>
+                        <li>Holding familiar e pilares do contrato social</li>
+                        <li>Regimes de casamento e impacto sucess&oacute;rio</li>
+                        <li>Transfer&ecirc;ncia e sucess&atilde;o de patrim&ocirc;nio</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com dom&iacute;nio sobre planejamento sucess&oacute;rio estrat&eacute;gico e jur&iacute;dico, an&aacute;lise de risco patrimonial, estrutura&ccedil;&atilde;o societ&aacute;ria e entendimento sobre regimes de bens, testamentos e heran&ccedil;a.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">03</span>
+                    <span class="curriculum-title">Reforma Tribut&aacute;ria no Agro</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <ul class="curriculum-topics">
+                        <li>O novo modelo tribut&aacute;rio: IBS, CBS e o fim do sistema atual</li>
+                        <li>Impactos diretos da reforma para o produtor rural PF e PJ</li>
+                        <li>Regime espec&iacute;fico do agro: o que muda e o que permanece</li>
+                        <li>Cr&eacute;ditos tribut&aacute;rios na nova l&oacute;gica e a n&atilde;o cumulatividade plena</li>
+                        <li>Per&iacute;odo de transi&ccedil;&atilde;o: cronograma, riscos e oportunidades</li>
+                        <li>Planejamento tribut&aacute;rio rural no novo cen&aacute;rio</li>
+                        <li>Estrat&eacute;gias de adequa&ccedil;&atilde;o para holdings e empresas familiares do agro</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com dom&iacute;nio sobre o novo sistema tribut&aacute;rio e seus impactos no agro, capacidade de planejar a transi&ccedil;&atilde;o com seguran&ccedil;a e vis&atilde;o estrat&eacute;gica para proteger o resultado do neg&oacute;cio familiar.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">04</span>
+                    <span class="curriculum-title">Gest&atilde;o Financeira Estrat&eacute;gica na Atividade Rural</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <ul class="curriculum-topics">
+                        <li>Diferen&ccedil;a entre resultado econ&ocirc;mico e financeiro</li>
+                        <li>Classifica&ccedil;&atilde;o e an&aacute;lise de custos e despesas</li>
+                        <li>Plano de contas e centros de custos</li>
+                        <li>Ferramentas de gest&atilde;o: fluxo de caixa, DRE e indicadores</li>
+                        <li>Planejamento de metas e balan&ccedil;o patrimonial</li>
+                        <li>Etapas para gest&atilde;o financeira eficiente</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai lendo demonstra&ccedil;&otilde;es financeiras e indicadores, com capacidade de planejamento or&ccedil;ament&aacute;rio e tomada de decis&atilde;o baseada em dados financeiros reais do seu neg&oacute;cio.</p>
+                </div>
+            </article>
+            <article class="curriculum-item">
+                <button class="curriculum-trigger" type="button" aria-expanded="false">
+                    <span class="curriculum-index">05</span>
+                    <span class="curriculum-title">Gest&atilde;o e Governan&ccedil;a em Empresas Rurais Familiares</span>
+                    <span class="curriculum-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="curriculum-content">
+                    <ul class="curriculum-topics">
+                        <li>Governan&ccedil;a: teoria, pr&aacute;tica e aplica&ccedil;&atilde;o no agro</li>
+                        <li>Governan&ccedil;a Corporativa e Governan&ccedil;a Familiar</li>
+                        <li>&Oacute;rg&atilde;os de governan&ccedil;a e protocolo familiar</li>
+                        <li>Objetivos e planos da fam&iacute;lia empres&aacute;ria</li>
+                        <li>Estrutura organizacional e remunera&ccedil;&atilde;o</li>
+                        <li>C&oacute;digo de conduta, miss&atilde;o, vis&atilde;o e valores</li>
+                    </ul>
+                    <p class="curriculum-result"><strong>Resultado:</strong> Voc&ecirc; sai com capacidade de implantar mecanismos de governan&ccedil;a corporativa, estruturar conselhos, protocolos e regras familiares, e construir uma cultura organizacional alinhada ao legado.</p>
+                </div>
+            </article>
+        `;
+    }
+}
+
+function repositionPointsRescueCard() {
+    const pointsCard = document.querySelector('.points-rescue-card');
+    const pricingGrid = document.querySelector('.pricing-grid');
+
+    if (!pointsCard || !pricingGrid) {
+        return;
+    }
+
+    if (pricingGrid.nextElementSibling !== pointsCard) {
+        pricingGrid.insertAdjacentElement('afterend', pointsCard);
+    }
+
+    const pointsCopy = pointsCard.querySelector('.points-rescue-copy');
+    const pointsButton = pointsCard.querySelector('.points-rescue-btn');
+
+    if (pointsCopy) {
+        pointsCopy.innerHTML = `
+            <h2>Dispon&iacute;vel para Resgate de Pontos</h2>
+            <p>Voc&ecirc; pode utilizar seus pontos para participar da imers&atilde;o. Fale com um consultor para saber as condi&ccedil;&otilde;es e plataformas aceitas.</p>
+        `;
+    }
+
+    if (pointsButton) {
+        pointsButton.href = 'https://api.whatsapp.com/send/?phone=556296771552&text=Ol%C3%A1%2C+gostaria+de+saber+sobre+o+resgate+de+pontos+para+o+Sucessores+do+Agro+-+9%C2%AA+Edi%C3%A7%C3%A3o%21&type=phone_number&app_absent=0';
+        pointsButton.innerHTML = 'Falar com consultor <span>&rarr;</span>';
+    }
+}
+
+function applyFacultyOverrides() {
+    const facultyData = [
+        {
+            name: 'Sandro Elias',
+            module: 'A Nova Geração do Agro e o Papel do Sucessor',
+            bio: 'Sócio e Diretor da Safras & Cifras e Educasafras. Especialista em Gestão de Empresas pela Harvard (USA). Consultor em Planejamento Sucessório, Tributação e Governança há mais de 20 anos.'
+        },
+        {
+            name: 'Alessandra Braga',
+            module: 'Holding Rural: Gestão, Sociedade e Sucessão',
+            bio: 'Advogada, formada pela PUC Goiás, especialista em Direito Empresarial pelo Instituto Damasio e Gestão Patrimonial pelo Insper. Coordenadora Regional da Safras & Cifras.'
+        },
+        {
+            name: 'Augusto Moura',
+            module: 'Reforma Tributária no Agro',
+            bio: 'Sócio Consultor da Safras & Cifras. Advogado Tributarista com experiência em implantação de estruturas de organização e planejamento tributário com ênfase no agronegócio.'
+        },
+        {
+            name: 'Vinícius Kaefer',
+            module: 'Gestão Financeira Estratégica na Atividade Rural',
+            bio: 'Engenheiro de Produção pela UFPEL, com especialização em Finanças. Consultor da Safras & Cifras, responsável pelo setor de Gestão Econômica e Financeira.'
+        },
+        {
+            name: 'Tais Leivas',
+            module: 'Gestão e Governança em Empresas Rurais Familiares',
+            bio: 'Psicóloga, sócia e consultora de Governança e Sucessão na Safras & Cifras. Especialista Educasafras.'
+        }
+    ];
+
+    document.querySelectorAll('.faculty-card').forEach((card) => {
+        const nameEl = card.querySelector('h3');
+        const topicEl = card.querySelector('.faculty-topic');
+        const bioEl = card.querySelector('.faculty-bio p');
+
+        if (!nameEl || !topicEl || !bioEl) {
+            return;
+        }
+
+        const match = facultyData.find((item) => item.name === nameEl.textContent.trim());
+        if (!match) {
+            return;
+        }
+
+        topicEl.textContent = match.module;
+        bioEl.textContent = match.bio;
+    });
+}
+
+function initContentOverrides() {
+    applyCurriculumOverrides();
+    applyFAQOverrides();
+    applyFacultyOverrides();
+    repositionPointsRescueCard();
+    const heroCopy = document.querySelector('.hero-copy > p');
+    if (heroCopy) {
+        heroCopy.innerHTML = '<strong>70% das propriedades rurais não chegam à próxima geração.</strong> Formação que nasce para proteger décadas de trabalho, preservar o patrimônio e garantir continuidade ao legado familiar.';
+    }
+
+    const heroProofItems = document.querySelectorAll('.hero-proof-item');
+    if (heroProofItems[1]) {
+        heroProofItems[1].classList.add('hero-proof-item-edition');
+        const proofValue = heroProofItems[1].querySelector('strong');
+        const proofLabel = heroProofItems[1].querySelector('span');
+        if (proofValue) {
+            proofValue.textContent = '9ª';
+        }
+        if (proofLabel) {
+            proofLabel.textContent = 'Edição Consecutiva';
+        }
+    }
+
+    const pricingCards = document.querySelectorAll('.pricing-grid .price-card');
+    if (pricingCards[0]) {
+        const firstCard = pricingCards[0];
+        const firstText = firstCard.querySelector('p');
+        if (firstText) {
+            firstText.textContent = 'parcelamento disponível';
+        }
+        if (!firstCard.querySelector('ul')) {
+            const firstList = document.createElement('ul');
+            firstList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+            firstText?.insertAdjacentElement('afterend', firstList);
+        }
+    }
+
+    if (pricingCards[1]) {
+        const secondCard = pricingCards[1];
+        const secondBadge = secondCard.querySelector('.badge');
+        const secondText = secondCard.querySelector('p');
+        if (secondBadge) {
+            secondBadge.textContent = 'Últimas vagas';
+        }
+        if (secondText) {
+            secondText.textContent = 'parcelamento disponível';
+        }
+        const secondList = secondCard.querySelector('ul');
+        if (secondList) {
+            secondList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+        }
+    }
+
+    if (pricingCards[2]) {
+        const thirdCard = pricingCards[2];
+        const thirdText = thirdCard.querySelector('p');
+        if (thirdText) {
+            thirdText.textContent = 'parcelamento disponível';
+        }
+        if (!thirdCard.querySelector('ul')) {
+            const thirdList = document.createElement('ul');
+            thirdList.innerHTML = `
+                <li>5 módulos presenciais</li>
+                <li>Material didático completo</li>
+                <li>Certificado de conclusão</li>
+                <li>Networking nacional</li>
+            `;
+            thirdText?.insertAdjacentElement('afterend', thirdList);
+        }
+    }
+}
 
 function updateTopbarSafeSpace() {
     const topbar = document.querySelector('.topbar');
@@ -59,12 +400,44 @@ function initCurriculumAccordion() {
 }
 
 function initFacultyCards() {
+    const facultyData = {
+        'Sandro Elias': {
+            module: 'A Nova Geração do Agro e o Papel do Sucessor',
+            bio: 'Sócio e Diretor da Safras & Cifras e Educasafras. Especialista em Gestão de Empresas pela Harvard (USA). Consultor em Planejamento Sucessório, Tributação e Governança há mais de 20 anos.'
+        },
+        'Alessandra Braga': {
+            module: 'Holding Rural: Gestão, Sociedade e Sucessão',
+            bio: 'Advogada, formada pela PUC Goiás, especialista em Direito Empresarial pelo Instituto Damasio e Gestão Patrimonial pelo Insper. Coordenadora Regional da Safras & Cifras.'
+        },
+        'Augusto Moura': {
+            module: 'Reforma Tributária no Agro',
+            bio: 'Sócio Consultor da Safras & Cifras. Advogado Tributarista com experiência em implantação de estruturas de organização e planejamento tributário com ênfase no agronegócio.'
+        },
+        'Vinícius Kaefer': {
+            module: 'Gestão Financeira Estratégica na Atividade Rural',
+            bio: 'Engenheiro de Produção pela UFPEL, com especialização em Finanças. Consultor da Safras & Cifras, responsável pelo setor de Gestão Econômica e Financeira.'
+        },
+        'Tais Leivas': {
+            module: 'Gestão e Governança em Empresas Rurais Familiares',
+            bio: 'Psicóloga, sócia e consultora de Governança e Sucessão na Safras & Cifras. Especialista Educasafras.'
+        }
+    };
+
     document.querySelectorAll('.faculty-card').forEach((card) => {
         const trigger = card.querySelector('.faculty-toggle');
         const bio = card.querySelector('.faculty-bio');
+        const nameEl = card.querySelector('h3');
+        const topicEl = card.querySelector('.faculty-topic');
+        const bioText = card.querySelector('.faculty-bio p');
 
-        if (!trigger || !bio) {
+        if (!trigger || !bio || !nameEl || !topicEl || !bioText) {
             return;
+        }
+
+        const content = facultyData[nameEl.textContent.trim()];
+        if (content) {
+            topicEl.textContent = content.module;
+            bioText.textContent = content.bio;
         }
 
         bio.hidden = !card.classList.contains('is-open');
@@ -168,6 +541,265 @@ function initMobileMenu() {
     }
 }
 
+const LEAD_WEBHOOK_URL = 'https://automation.opscap.collieassociados.com/webhook/f2c1fa7f-4a54-47c1-b451-46e77f061c0c';
+const LEAD_SOURCE_STORAGE_KEY = 'educasafras:sucessores:lead-source';
+
+function getViewportLeadLabel() {
+    return window.matchMedia('(max-width: 767px)').matches ? 'Mobile' : 'Desktop';
+}
+
+function getNormalizedLeadSource(rawSource) {
+    const fallbackSource = 'Sucessores do Agro - Formulario';
+    const source = (rawSource || fallbackSource).trim();
+    const viewportLabel = getViewportLeadLabel();
+
+    if (source.endsWith(` - ${viewportLabel}`)) {
+        return source;
+    }
+
+    return `${source} - ${viewportLabel}`;
+}
+
+function inferLeadSourceFromElement(element) {
+    if (!element) {
+        return '';
+    }
+
+    const href = element.getAttribute('href') || '';
+    const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
+
+    if (element.classList.contains('testimonials-cta-btn')) {
+        return 'Sucessores do Agro - Depoimentos';
+    }
+
+    if (element.closest('.hero')) {
+        return 'Sucessores do Agro - Hero';
+    }
+
+    if (element.closest('.price-card.active')) {
+        return 'Sucessores do Agro - Oferta Lote 02';
+    }
+
+    if (element.closest('.topbar-shell')) {
+        return 'Sucessores do Agro - Topbar';
+    }
+
+    if (href === '#lead-form-section' || href === '#inscricao') {
+        return text ? `Sucessores do Agro - ${text}` : 'Sucessores do Agro - CTA';
+    }
+
+    return '';
+}
+
+function persistLeadSource(source) {
+    const normalizedSource = getNormalizedLeadSource(source);
+    window.sessionStorage.setItem(LEAD_SOURCE_STORAGE_KEY, normalizedSource);
+    return normalizedSource;
+}
+
+function getPersistedLeadSource() {
+    return window.sessionStorage.getItem(LEAD_SOURCE_STORAGE_KEY) || '';
+}
+
+function initLeadSourceTracking() {
+    document.querySelectorAll('a[href="#lead-form-section"], a[href="#inscricao"]').forEach((anchor) => {
+        anchor.addEventListener('click', () => {
+            const inferredSource = inferLeadSourceFromElement(anchor);
+            if (inferredSource) {
+                persistLeadSource(inferredSource);
+            }
+        });
+    });
+}
+
+function getLeadQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const readParam = (...keys) => {
+        for (const key of keys) {
+            const value = params.get(key);
+            if (value) {
+                return value;
+            }
+        }
+
+        return '';
+    };
+
+    return {
+        utm_source: readParam('utm_source'),
+        utm_medium: readParam('utm_medium'),
+        utm_campaign: readParam('utm_campaign'),
+        utm_content: readParam('utm_content'),
+        utm_term: readParam('utm_term'),
+        adcampaign: readParam('adcampaign', 'campaignid', 'campaign_id'),
+        groupid: readParam('groupid', 'adgroupid', 'group_id'),
+        adid: readParam('adid', 'creative', 'creative_id'),
+        fbclid: readParam('fbclid'),
+        gclid: readParam('gclid')
+    };
+}
+
+function getLeadSubmittedAt() {
+    return new Intl.DateTimeFormat('pt-BR', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+        timeZone: 'America/Sao_Paulo'
+    }).format(new Date());
+}
+
+function getNormalizedWhatsappDigits(rawValue) {
+    const digits = String(rawValue || '').replace(/\D/g, '');
+
+    if (digits.length === 13 && digits.startsWith('55')) {
+        return digits.slice(2);
+    }
+
+    return digits;
+}
+
+function isRepeatedDigits(value) {
+    return /^(\d)\1+$/.test(value);
+}
+
+function isObviousNumericSequence(value) {
+    if (value.length < 8) {
+        return false;
+    }
+
+    let ascending = true;
+    let descending = true;
+
+    for (let index = 1; index < value.length; index += 1) {
+        const previous = Number(value[index - 1]);
+        const current = Number(value[index]);
+
+        if (current !== (previous + 1) % 10) {
+            ascending = false;
+        }
+
+        if (current !== (previous + 9) % 10) {
+            descending = false;
+        }
+    }
+
+    return ascending || descending;
+}
+
+function validateWhatsapp(rawValue) {
+    const digits = getNormalizedWhatsappDigits(rawValue);
+
+    if (!digits) {
+        return 'Informe um WhatsApp.';
+    }
+
+    if (digits.length !== 11) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    const subscriberNumber = digits.slice(2);
+
+    if (!subscriberNumber.startsWith('9')) {
+        return 'Informe um número de celular/WhatsApp válido.';
+    }
+
+    if (isRepeatedDigits(subscriberNumber) || isRepeatedDigits(digits)) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    if (isObviousNumericSequence(subscriberNumber) || isObviousNumericSequence(digits)) {
+        return 'Informe um WhatsApp válido.';
+    }
+
+    return '';
+}
+
+function validateEmailAddress(rawValue) {
+    const email = String(rawValue || '').trim();
+
+    if (!email) {
+        return 'Informe um e-mail.';
+    }
+
+    if (email.length > 254 || /\s/.test(email)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    const parts = email.split('@');
+    if (parts.length !== 2) {
+        return 'Informe um e-mail válido.';
+    }
+
+    const [localPart, domain] = parts;
+    const domainLabels = domain.toLowerCase().split('.');
+    const primaryDomainLabel = domainLabels[0] || '';
+    const normalizedLocalPart = localPart.toLowerCase();
+    const placeholderTokens = new Set([
+        'teste',
+        'test',
+        'email',
+        'exemplo',
+        'example'
+    ]);
+
+    if (!localPart || !domain || localPart.length > 64) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!domain.includes('.')) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (
+        localPart.startsWith('.') ||
+        localPart.endsWith('.') ||
+        localPart.includes('..') ||
+        domain.startsWith('.') ||
+        domain.endsWith('.') ||
+        domain.includes('..')
+    ) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!/^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(localPart)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (!/^(?=.{1,253}$)(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}$/i.test(domain)) {
+        return 'Informe um e-mail válido.';
+    }
+
+    if (
+        normalizedLocalPart === primaryDomainLabel ||
+        (placeholderTokens.has(normalizedLocalPart) && placeholderTokens.has(primaryDomainLabel))
+    ) {
+        return 'Informe um e-mail válido.';
+    }
+
+    return '';
+}
+
+function validateLeadFields(payload) {
+    const whatsappError = validateWhatsapp(payload.whatsapp);
+    if (whatsappError) {
+        return whatsappError;
+    }
+
+    const emailError = validateEmailAddress(payload.email);
+    if (emailError) {
+        return emailError;
+    }
+
+    return '';
+}
+
+function pushLeadDataLayerEvent(eventName, eventData = {}) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: eventName,
+        ...eventData
+    });
+}
+
 function initLeadForm() {
     const section = document.querySelector('.lead-section');
     if (!section) {
@@ -178,14 +810,131 @@ function initLeadForm() {
     const successState = section.querySelector('.lead-modal-success');
     const firstInput = section.querySelector('input, select, textarea');
     const resetTrigger = section.querySelector('[data-reset-lead-form]');
+    const submitButton = section.querySelector('.lead-modal-submit');
+    const whatsappInput = form?.querySelector('input[name="whatsapp"]');
+    const emailInput = form?.querySelector('input[name="email"]');
 
     if (!form) {
         return;
     }
 
+    initLeadSourceTracking();
+
+    let feedbackMessage = section.querySelector('[data-lead-form-feedback]');
+    if (!feedbackMessage) {
+        feedbackMessage = document.createElement('p');
+        feedbackMessage.dataset.leadFormFeedback = 'true';
+        feedbackMessage.hidden = true;
+        feedbackMessage.style.marginTop = '16px';
+        feedbackMessage.style.color = '#b42318';
+        form.insertAdjacentElement('afterend', feedbackMessage);
+    }
+
+    const setFeedbackMessage = (message = '') => {
+        feedbackMessage.textContent = message;
+        feedbackMessage.hidden = !message;
+    };
+
+    const getFieldErrorNode = (input) => {
+        if (!input) {
+            return null;
+        }
+
+        const field = input.closest('.lead-field');
+        if (!field) {
+            return null;
+        }
+
+        let errorNode = field.querySelector('[data-field-error]');
+        if (!errorNode) {
+            errorNode = document.createElement('span');
+            errorNode.dataset.fieldError = 'true';
+            errorNode.className = 'lead-field-error';
+            errorNode.hidden = true;
+            field.appendChild(errorNode);
+        }
+
+        return errorNode;
+    };
+
+    const setFieldError = (input, message = '', { showMessage = true } = {}) => {
+        if (!input) {
+            return;
+        }
+
+        const field = input.closest('.lead-field');
+        const errorNode = getFieldErrorNode(input);
+
+        input.setCustomValidity(message);
+
+        if (field) {
+            field.classList.toggle('has-error', Boolean(message) && showMessage);
+        }
+
+        if (errorNode) {
+            errorNode.textContent = showMessage ? message : '';
+            errorNode.hidden = !message || !showMessage;
+        }
+    };
+
+    let hasSubmitted = false;
+
+    const syncFieldValidation = ({ showMessages = false } = {}) => {
+        if (whatsappInput) {
+            setFieldError(whatsappInput, validateWhatsapp(whatsappInput.value), { showMessage: showMessages });
+        }
+
+        if (emailInput) {
+            setFieldError(emailInput, validateEmailAddress(emailInput.value), { showMessage: showMessages });
+        }
+    };
+
+    const isFormSubmittable = () => {
+        const requiredFields = Array.from(form.querySelectorAll('[required]'));
+        const hasEmptyRequiredField = requiredFields.some((field) => !String(field.value || '').trim());
+
+        if (hasEmptyRequiredField) {
+            return false;
+        }
+
+        const whatsappError = whatsappInput ? validateWhatsapp(whatsappInput.value) : '';
+        const emailError = emailInput ? validateEmailAddress(emailInput.value) : '';
+
+        return !whatsappError && !emailError;
+    };
+
+    const updateSubmitButtonState = () => {
+        if (!submitButton) {
+            return;
+        }
+
+        syncFieldValidation({ showMessages: false });
+        submitButton.disabled = !isFormSubmittable();
+        submitButton.setAttribute('aria-disabled', String(submitButton.disabled));
+    };
+
+    const setSubmittingState = (isSubmitting) => {
+        if (!submitButton) {
+            return;
+        }
+
+        submitButton.disabled = isSubmitting || !isFormSubmittable();
+        submitButton.setAttribute('aria-disabled', String(submitButton.disabled));
+        submitButton.setAttribute('aria-busy', String(isSubmitting));
+        submitButton.innerHTML = isSubmitting
+            ? 'Enviando...'
+            : 'Receber mais informaÃ§Ãµes <span>â†’</span>';
+    };
+
     const resetForm = ({ shouldFocus = false } = {}) => {
         form.hidden = false;
         form.reset();
+        hasSubmitted = false;
+        setFieldError(whatsappInput, '', { showMessage: false });
+        setFieldError(emailInput, '', { showMessage: false });
+        setFeedbackMessage('');
+        setSubmittingState(false);
+        updateSubmitButtonState();
 
         if (successState) {
             successState.hidden = true;
@@ -196,13 +945,111 @@ function initLeadForm() {
         }
     };
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        form.hidden = true;
+    whatsappInput?.addEventListener('input', () => {
+        setFieldError(whatsappInput, '', { showMessage: false });
+        updateSubmitButtonState();
+    });
 
-        if (successState) {
-            successState.hidden = false;
-            successState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    whatsappInput?.addEventListener('blur', () => {
+        setFieldError(whatsappInput, validateWhatsapp(whatsappInput.value), { showMessage: true });
+        updateSubmitButtonState();
+    });
+
+    emailInput?.addEventListener('input', () => {
+        setFieldError(emailInput, '', { showMessage: false });
+        updateSubmitButtonState();
+    });
+
+    emailInput?.addEventListener('blur', () => {
+        setFieldError(emailInput, validateEmailAddress(emailInput.value), { showMessage: true });
+        updateSubmitButtonState();
+    });
+
+    form.querySelectorAll('input, select, textarea').forEach((field) => {
+        if (field === whatsappInput || field === emailInput) {
+            return;
+        }
+
+        field.addEventListener('input', updateSubmitButtonState);
+        field.addEventListener('change', updateSubmitButtonState);
+        field.addEventListener('blur', updateSubmitButtonState);
+    });
+
+    updateSubmitButtonState();
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        hasSubmitted = true;
+
+        syncFieldValidation({ showMessages: true });
+
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        const formData = new FormData(form);
+        const source = getPersistedLeadSource() || getNormalizedLeadSource('Sucessores do Agro - Formulario');
+        const payload = {
+            nome: String(formData.get('nome') || '').trim(),
+            whatsapp: String(formData.get('whatsapp') || '').trim(),
+            email: String(formData.get('email') || '').trim(),
+            formacao: 'sucessores',
+            envolvimento: String(formData.get('envolvimento') || '').trim(),
+            mensagem: String(formData.get('desafio') || '').trim(),
+            origem: source,
+            data_cadastro: getLeadSubmittedAt(),
+            canal: window.location.hostname,
+            ...getLeadQueryParams()
+        };
+
+        const fieldValidationError = validateLeadFields(payload);
+        if (fieldValidationError) {
+            setFeedbackMessage(fieldValidationError);
+            syncFieldValidation({ showMessages: true });
+            form.reportValidity();
+            return;
+        }
+
+        setFeedbackMessage('');
+        setSubmittingState(true);
+        pushLeadDataLayerEvent('lead_form_submit_attempt', {
+            lead_source: payload.origem,
+            lead_formacao: payload.formacao
+        });
+
+        try {
+            const response = await fetch(LEAD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Webhook returned ${response.status}`);
+            }
+
+            form.hidden = true;
+
+            if (successState) {
+                successState.hidden = false;
+                successState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            pushLeadDataLayerEvent('lead_form_submit_success', {
+                lead_source: payload.origem,
+                lead_formacao: payload.formacao
+            });
+        } catch (error) {
+            setFeedbackMessage('NÃ£o foi possÃ­vel enviar seus dados agora. Tente novamente em instantes.');
+            pushLeadDataLayerEvent('lead_form_submit_error', {
+                lead_source: payload.origem,
+                error_message: error instanceof Error ? error.message : 'unknown_error'
+            });
+        } finally {
+            setSubmittingState(false);
+            updateSubmitButtonState();
         }
     });
 
@@ -222,6 +1069,10 @@ function initRevealAnimations() {
         '.curriculum-item',
         '.feature-card',
         '.step-card',
+        '.testimonials-proof',
+        '.testimonials-track .testimonial-card',
+        '.testimonials-pagination',
+        '.testimonials-cta',
         '.faculty-card',
         '.price-card',
         '.faq-item',
@@ -253,6 +1104,105 @@ function initRevealAnimations() {
     });
 }
 
+function initTestimonialsCarousel() {
+    const carousel = document.querySelector('[data-testimonials-carousel]');
+    if (!carousel) {
+        return;
+    }
+
+    const track = carousel.querySelector('[data-testimonials-track]');
+    const prevButton = carousel.querySelector('[data-testimonials-prev]');
+    const nextButton = carousel.querySelector('[data-testimonials-next]');
+    const pagination = document.querySelector('[data-testimonials-pagination]');
+    const cards = track ? Array.from(track.querySelectorAll('.testimonial-card')) : [];
+
+    if (!track || !prevButton || !nextButton || !pagination || cards.length < 2) {
+        return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 900px)');
+    let pageCount = 1;
+    let activePage = 0;
+    let dots = [];
+
+    const getSlidesPerPage = () => (mobileQuery.matches ? 1 : 2);
+
+    const getPageOffset = (page) => {
+        const targetIndex = Math.min(page * getSlidesPerPage(), cards.length - 1);
+        const targetCard = cards[targetIndex];
+        if (!targetCard) {
+            return 0;
+        }
+
+        return targetCard.offsetLeft - cards[0].offsetLeft;
+    };
+
+    const setActiveDot = (page) => {
+        dots.forEach((dot, dotIndex) => {
+            dot.classList.toggle('is-active', dotIndex === page);
+            dot.setAttribute('aria-current', dotIndex === page ? 'true' : 'false');
+        });
+    };
+
+    const updateFromScroll = () => {
+        const offset = track.scrollLeft;
+        let closestPage = 0;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        for (let page = 0; page < pageCount; page += 1) {
+            const distance = Math.abs(offset - getPageOffset(page));
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPage = page;
+            }
+        }
+
+        activePage = closestPage;
+        setActiveDot(activePage);
+    };
+
+    const scrollToPage = (page) => {
+        activePage = (page + pageCount) % pageCount;
+        track.scrollTo({
+            left: getPageOffset(activePage),
+            behavior: 'smooth'
+        });
+        setActiveDot(activePage);
+    };
+
+    const rebuildPagination = () => {
+        pageCount = Math.max(1, Math.ceil(cards.length / getSlidesPerPage()));
+        activePage = Math.min(activePage, pageCount - 1);
+        pagination.innerHTML = '';
+        dots = Array.from({ length: pageCount }, (_, page) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Ir para a pagina ${page + 1} dos depoimentos`);
+            dot.addEventListener('click', () => scrollToPage(page));
+            pagination.appendChild(dot);
+            return dot;
+        });
+        setActiveDot(activePage);
+        track.scrollLeft = getPageOffset(activePage);
+    };
+
+    prevButton.addEventListener('click', () => scrollToPage(activePage - 1));
+    nextButton.addEventListener('click', () => scrollToPage(activePage + 1));
+    track.addEventListener('scroll', () => {
+        window.requestAnimationFrame(updateFromScroll);
+    }, { passive: true });
+
+    const handleViewportChange = () => rebuildPagination();
+    if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', handleViewportChange);
+    } else if (typeof mobileQuery.addListener === 'function') {
+        mobileQuery.addListener(handleViewportChange);
+    }
+
+    window.addEventListener('resize', rebuildPagination, { passive: true });
+    rebuildPagination();
+}
+
 function initNavbarState() {
     const topbarShell = document.querySelector('.topbar-shell');
     const hero = document.querySelector('.hero');
@@ -267,13 +1217,7 @@ function initNavbarState() {
 
     updateState();
     updateTopbarSafeSpace();
-    window.addEventListener('resize', updateTopbarSafeSpace, { passive: true });
     window.addEventListener('scroll', updateState, { passive: true });
-    window.addEventListener('load', updateTopbarSafeSpace, { once: true });
-
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(updateTopbarSafeSpace).catch(() => {});
-    }
 
     if (!hero) {
         return;
@@ -297,21 +1241,86 @@ function initHeroSlideshow() {
         return;
     }
 
-    const slides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
+    const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+    const allSlides = Array.from(slideshow.querySelectorAll('.hero-bg-slide'));
+    const slides = allSlides.filter((slide) => !(isMobileViewport && slide.dataset.hideMobile === 'true'));
+    const scheduleHydration = window.requestIdleCallback
+        ? (callback, timeout = 1200) => window.requestIdleCallback(callback, { timeout })
+        : (callback) => window.setTimeout(callback, 220);
+
+    if (isMobileViewport) {
+        allSlides.forEach((slide) => {
+            if (slide.dataset.hideMobile === 'true') {
+                slide.classList.remove('is-active');
+                slide.hidden = true;
+            }
+        });
+    }
+
     if (!slides.length) {
         return;
     }
 
     let activeIndex = 0;
 
+    const hydrateSlide = (slide) => {
+        if (!slide || slide.dataset.loaded === 'true') {
+            return;
+        }
+
+        const picture = slide.querySelector('picture');
+        const image = picture ? picture.querySelector('img') : null;
+        if (!picture || !image) {
+            return;
+        }
+
+        const [mobileWebpSource, desktopWebpSource, mobileJpgSource] = picture.querySelectorAll('source');
+        if (mobileWebpSource) {
+            mobileWebpSource.srcset = picture.dataset.mobileWebp || '';
+        }
+        if (desktopWebpSource) {
+            desktopWebpSource.srcset = picture.dataset.desktopWebp || '';
+        }
+        if (mobileJpgSource) {
+            mobileJpgSource.srcset = picture.dataset.mobileJpg || '';
+        }
+
+        image.src = picture.dataset.desktopJpg || HERO_SLIDE_PLACEHOLDER;
+        image.loading = 'eager';
+        slide.dataset.loaded = 'true';
+        slide.classList.add('is-ready');
+    };
+
+    const queueHydration = (slide, timeout) => {
+        if (!slide || slide.dataset.loaded === 'true') {
+            return;
+        }
+
+        scheduleHydration(() => hydrateSlide(slide), timeout);
+    };
+
     const setActiveSlide = (index) => {
         activeIndex = (index + slides.length) % slides.length;
+        hydrateSlide(slides[activeIndex]);
         slides.forEach((slide, slideIndex) => {
             slide.classList.toggle('is-active', slideIndex === activeIndex);
         });
+
+        queueHydration(slides[(activeIndex + 1) % slides.length], 900);
     };
 
+    slides.forEach((slide) => {
+        if (slide.dataset.loaded === 'true') {
+            slide.classList.add('is-ready');
+            const image = slide.querySelector('img');
+            if (image && image.src === HERO_SLIDE_PLACEHOLDER) {
+                image.removeAttribute('src');
+            }
+        }
+    });
+
     setActiveSlide(0);
+    queueHydration(slides[1], 600);
     window.setInterval(() => {
         setActiveSlide(activeIndex + 1);
     }, 4200);
